@@ -1,0 +1,17 @@
+! If Command successful test
+
+let
+  var a : Integer;
+  var b : Integer;
+  var c: String
+in
+begin
+  c := 'h';
+  putint(c);
+  a:= 4;
+  b:= 3;
+  if ( a / b = 2 ) then ! boolean xpression
+    putint(a)
+  else
+    putint(b)
+end
