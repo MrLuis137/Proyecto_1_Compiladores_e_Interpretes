@@ -292,12 +292,13 @@ public class Parser {
         }
       }
       break;
+    
 
-    case Token.BEGIN:
+    /*case Token.BEGIN:
       acceptIt();
       commandAST = parseCommand();
       accept(Token.END);
-      break;
+      break; */
 
     case Token.LET:
       {
