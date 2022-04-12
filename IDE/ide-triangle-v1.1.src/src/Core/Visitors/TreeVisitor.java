@@ -101,6 +101,7 @@ public class TreeVisitor implements Visitor {
     }
     
     public Object visitIfCommand(IfCommand ast, Object obj) {
+        
         return(createTernary("If Command", ast.E, ast.C1, ast.C2));
     }
     

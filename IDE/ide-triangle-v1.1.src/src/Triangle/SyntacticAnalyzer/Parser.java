@@ -81,6 +81,7 @@ import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.AbstractSyntaxTrees.WhileCommand;
+import java.util.ArrayList;
 
 public class Parser {
 
@@ -317,14 +318,20 @@ public class Parser {
         Expression eAST = parseExpression();
         accept(Token.THEN);
         Command c1AST = parseSingleCommand();
-        accept(Token.ELSE);
-        Command c2AST = parseSingleCommand();
+        Command c2AST = null;
+        if(currentToken.kind == Token.ELSIF){
+            c2AST = parseRestOfIf();
+        }
+        else{
+            accept(Token.ELSE);
+            c2AST = parseSingleCommand();
+        }
         finish(commandPos);
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
       }
       break;
 
-    case Token.WHILE:
+      case Token.WHILE:
       {
         acceptIt();
         Expression eAST = parseExpression();
@@ -353,6 +360,28 @@ public class Parser {
     }
 
     return commandAST;
+  }
+  
+  public Command parseRestOfIf() throws SyntaxError{
+        Command commandAST = null;
+        SourcePosition commandPos = new SourcePosition();
+        start (commandPos);
+        acceptIt();
+        Expression eAST = parseExpression();
+        accept(Token.THEN);
+        Command c1AST = parseSingleCommand();
+        Command c2AST = null;
+        if(currentToken.kind == Token.ELSIF){
+            c2AST = parseRestOfIf();
+        }
+        else{
+            accept(Token.ELSE);
+            c2AST = parseSingleCommand();
+        }
+        finish(commandPos);
+        commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
+      
+      return commandAST;
   }
 
 ///////////////////////////////////////////////////////////////////////////////

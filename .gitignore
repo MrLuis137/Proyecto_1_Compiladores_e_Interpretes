@@ -1,3 +1,8 @@
 /LibreriaTriangulo/Triangle/nbproject/private/
 /LibreriaTriangulo/Triangle/build/
 /LibreriaTriangulo/Triangle/dist/
+IDE/ide-triangle-v1.1.src/build/classes/Core/Visitors/TreeVisitor.class
+IDE/ide-triangle-v1.1.src/build/classes/Triangle/AbstractSyntaxTrees/IfCommand.class
+IDE/ide-triangle-v1.1.src/build/classes/Triangle/SyntacticAnalyzer/Parser.class
+*.class
+IDE/ide-triangle-v1.1.src/test/TEST.tri
