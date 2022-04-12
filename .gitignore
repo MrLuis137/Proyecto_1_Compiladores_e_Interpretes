@@ -6,3 +6,5 @@ IDE/ide-triangle-v1.1.src/build/classes/Triangle/AbstractSyntaxTrees/IfCommand.c
 IDE/ide-triangle-v1.1.src/build/classes/Triangle/SyntacticAnalyzer/Parser.class
 *.class
 IDE/ide-triangle-v1.1.src/test/TEST.tri
+*.class
+*.class

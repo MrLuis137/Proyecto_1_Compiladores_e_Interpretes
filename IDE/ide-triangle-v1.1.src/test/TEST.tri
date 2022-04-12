@@ -1,1 +1,25 @@
-chose
+let
+  var contador : Integer;
+  var c: array 11 of Char
+in
+contador := 0;
+if contador <> 0
+then
+contador := 1
+elsif contador = 1
+then
+contador := 0
+elsif contador = 1
+then
+contador := 0
+elsif contador = 1
+then
+contador := 0
+elsif contador = 1
+then
+contador := 0
+elsif contador = 1
+then
+contador := 0
+else
+contador := 66
