@@ -62,6 +62,7 @@ import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.AbstractSyntaxTrees.RecordAggregate;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
+import Triangle.AbstractSyntaxTrees.RepeatWhileDo;
 import Triangle.AbstractSyntaxTrees.SequentialCommand;
 import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
 import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
@@ -80,7 +81,6 @@ import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
-import Triangle.AbstractSyntaxTrees.WhileCommand;
 import java.util.ArrayList;
 
 public class Parser {
@@ -331,14 +331,26 @@ public class Parser {
       }
       break;
 
-      case Token.WHILE:
+      case Token.REPEATE:
       {
         acceptIt();
-        Expression eAST = parseExpression();
-        accept(Token.DO);
-        Command cAST = parseSingleCommand();
-        finish(commandPos);
-        commandAST = new WhileCommand(eAST, cAST, commandPos);
+        Expression eAST = null;
+        Command cAST = null;
+          switch (currentToken.kind) {
+              case Token.WHILE:
+                  acceptIt();
+                  eAST = parseExpression();
+                  accept(Token.DO);
+                  cAST = parseSingleCommand();
+                  accept(Token.END);
+                  finish(commandPos);
+                  commandAST = new RepeatWhileDo(eAST, cAST, commandPos);
+                  break;
+              default:
+                  throw new AssertionError();
+          }
+        
+        
       }
       break;
 

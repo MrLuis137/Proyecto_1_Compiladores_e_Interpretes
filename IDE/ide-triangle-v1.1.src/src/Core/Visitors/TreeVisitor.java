@@ -67,7 +67,7 @@ import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
-import Triangle.AbstractSyntaxTrees.WhileCommand;
+import Triangle.AbstractSyntaxTrees.RepeatWhileDo;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -113,9 +113,7 @@ public class TreeVisitor implements Visitor {
         return(createBinary("Sequential Command", ast.C1, ast.C2));
     }
     
-    public Object visitWhileCommand(WhileCommand ast, Object obj) {
-        return(createBinary("While Command", ast.E, ast.C));
-    }
+   
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc=" Expressions ">
@@ -438,4 +436,9 @@ public class TreeVisitor implements Visitor {
         return(t);             
     }
     // </editor-fold>
-}
+
+    @Override
+    public Object visitRepeatWhileDo(RepeatWhileDo ast, Object o) {
+        return createBinary("Repeat-While", ast.eAST, ast.cAST);
+    }
+ }

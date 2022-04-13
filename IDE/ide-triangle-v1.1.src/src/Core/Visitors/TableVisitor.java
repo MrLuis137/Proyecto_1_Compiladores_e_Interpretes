@@ -67,11 +67,11 @@ import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
-import Triangle.AbstractSyntaxTrees.WhileCommand;
 import Triangle.CodeGenerator.Field;
 import Triangle.CodeGenerator.KnownAddress;
 import Triangle.CodeGenerator.KnownRoutine;
 import Triangle.CodeGenerator.KnownValue;
+import Triangle.AbstractSyntaxTrees.RepeatWhileDo;
 import Triangle.CodeGenerator.TypeRepresentation;
 import Triangle.CodeGenerator.UnknownAddress;
 import Triangle.CodeGenerator.UnknownRoutine;
@@ -134,12 +134,14 @@ public class TableVisitor implements Visitor {
       return(null);
   }
   
-  public Object visitWhileCommand(WhileCommand ast, Object o) { 
-      ast.E.visit(this, null);
-      ast.C.visit(this, null);
-      
-      return(null);
-  }
+    @Override
+    public Object visitRepeatWhileDo(RepeatWhileDo ast, Object o) {
+       ast.eAST.visit(this,null);
+       ast.cAST.visit(this,null);
+       return(null);
+    }
+  
+
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc=" Expressions ">
@@ -622,4 +624,6 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Attributes ">
     private DefaultTableModel model;
     // </editor-fold>
+
+  
 }
