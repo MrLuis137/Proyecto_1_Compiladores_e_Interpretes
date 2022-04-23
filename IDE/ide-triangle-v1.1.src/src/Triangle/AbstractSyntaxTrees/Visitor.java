@@ -23,7 +23,8 @@ public interface Visitor {
   public abstract Object visitIfCommand(IfCommand ast, Object o);
   public abstract Object visitLetCommand(LetCommand ast, Object o);
   public abstract Object visitSequentialCommand(SequentialCommand ast, Object o);
-  public abstract Object visitRepeatWhileDo(RepeatWhileDo ast, Object o);
+  public abstract Object visitRepeat(Repeat ast, Object o);
+  public abstract Object visitRepeatDo(RepeatDo ast, Object o);
 
   // Expressions
   public abstract Object visitArrayExpression(ArrayExpression ast, Object o);

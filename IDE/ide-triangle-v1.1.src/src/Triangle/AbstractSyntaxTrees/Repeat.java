@@ -10,21 +10,21 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  *
  * @author lalem
  */
-public class RepeatWhileDo extends Command {
-    
+public class Repeat extends Command {
     public Expression eAST;
     public Command cAST;
+    public Command lAST;
+    public boolean isWhile;
     
-    public RepeatWhileDo(Expression eAST, Command cAST, SourcePosition thePosition){
+    public Repeat(  Expression eAST,Command cAST,Command lAST,Boolean isWhile, SourcePosition thePosition){
         super(thePosition);
         this.eAST = eAST;
         this.cAST = cAST;
+        this.lAST = lAST;
     }
 
     @Override
     public Object visit(Visitor v, Object o) {
-       return v.visitRepeatWhileDo(this, o);
+       return v.visitRepeat(this, o);
     }
-
-    
 }

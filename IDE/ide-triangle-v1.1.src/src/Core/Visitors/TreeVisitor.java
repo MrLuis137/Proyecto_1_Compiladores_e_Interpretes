@@ -49,6 +49,8 @@ import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
 import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
+import Triangle.AbstractSyntaxTrees.Repeat;
+import Triangle.AbstractSyntaxTrees.RepeatDo;
 import Triangle.AbstractSyntaxTrees.SequentialCommand;
 import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
 import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
@@ -67,7 +69,6 @@ import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
-import Triangle.AbstractSyntaxTrees.RepeatWhileDo;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -438,7 +439,22 @@ public class TreeVisitor implements Visitor {
     // </editor-fold>
 
     @Override
-    public Object visitRepeatWhileDo(RepeatWhileDo ast, Object o) {
-        return createBinary("Repeat-While", ast.eAST, ast.cAST);
+    public Object visitRepeat(Repeat ast, Object o) {
+        if(ast.isWhile){
+            return(createBinary("Repeat While", ast.eAST, ast.cAST));
+        }
+        else{
+            return(createBinary("Repeat until", ast.eAST, ast.cAST));
+        }
     }
+
+    @Override
+    public Object visitRepeatDo(RepeatDo ast, Object o) {
+        if(ast.isWhile){
+            return(createBinary("Repeat Do While", ast.cAST, ast.eAST));
+        }
+        else{
+            return(createBinary("Repeat Do until", ast.cAST, ast.eAST));
+        }  }
+
  }

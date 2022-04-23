@@ -49,6 +49,8 @@ import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
 import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
+import Triangle.AbstractSyntaxTrees.Repeat;
+import Triangle.AbstractSyntaxTrees.RepeatDo;
 import Triangle.AbstractSyntaxTrees.SequentialCommand;
 import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
 import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
@@ -71,7 +73,6 @@ import Triangle.CodeGenerator.Field;
 import Triangle.CodeGenerator.KnownAddress;
 import Triangle.CodeGenerator.KnownRoutine;
 import Triangle.CodeGenerator.KnownValue;
-import Triangle.AbstractSyntaxTrees.RepeatWhileDo;
 import Triangle.CodeGenerator.TypeRepresentation;
 import Triangle.CodeGenerator.UnknownAddress;
 import Triangle.CodeGenerator.UnknownRoutine;
@@ -135,7 +136,14 @@ public class TableVisitor implements Visitor {
   }
   
     @Override
-    public Object visitRepeatWhileDo(RepeatWhileDo ast, Object o) {
+    public Object visitRepeat(Repeat ast, Object o) {
+       ast.eAST.visit(this,null);
+       ast.cAST.visit(this,null);
+       return(null);
+    }
+    
+    @Override
+    public Object visitRepeatDo(RepeatDo ast, Object o) {
        ast.eAST.visit(this,null);
        ast.cAST.visit(this,null);
        return(null);
@@ -551,7 +559,7 @@ public class TableVisitor implements Visitor {
   }
   
   public Object visitOperator(Operator ast, Object o) { 
-      ast.decl.visit(this, null);
+      //ast.decl.visit(this, null);
   
       return(null);
   }
@@ -624,6 +632,8 @@ public class TableVisitor implements Visitor {
   // <editor-fold defaultstate="collapsed" desc=" Attributes ">
     private DefaultTableModel model;
     // </editor-fold>
+
+
 
   
 }
