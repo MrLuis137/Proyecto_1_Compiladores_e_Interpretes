@@ -13,9 +13,8 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
 public class ForCommandDefinition extends Command{
     Identifier iAST;
     Expression esAST;
-    Expression efAST;
     
-    ForCommandDefinition(Identifier iAST, Expression esAST, Expression efAST,SourcePosition postion){
+    public ForCommandDefinition(Identifier iAST, Expression esAST, SourcePosition postion){
         super(postion);
         this.iAST = iAST;
         this.esAST = esAST;

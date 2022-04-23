@@ -37,6 +37,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCommand;;
+import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
@@ -403,9 +405,54 @@ public class Parser {
         iAST = parseIdentifier();
         accept(Token.FROM);
         esAST = parseExpression();
+        ForCommandDefinition fdAST = new ForCommandDefinition(iAST, esAST, commandPos);
         accept(Token.DOUBLEDOT);
         efAST = parseExpression();
-        accept(Token.DO);
+        switch(currentToken.kind){
+            case Token.DO:
+                acceptIt();
+                Command cAST = parseCommand();
+                Command lAST = null;
+                if(currentToken.kind == Token.LEAVE){
+                    acceptIt();
+                    lAST = parseCommand();
+                }
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new ForCommand(fdAST, efAST, cAST,lAST,commandPos);
+                break;
+            case Token.WHILE:
+                acceptIt();
+                Expression ceAST = parseExpression();
+                accept(Token.DO);
+                cAST = parseCommand();
+                lAST = null;
+                if(currentToken.kind == Token.LEAVE){
+                    acceptIt();
+                    lAST = parseCommand();
+                }
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new ForCommand(fdAST, efAST,ceAST, true, cAST,lAST,commandPos);
+                break;
+            case Token.UNTIL:
+                acceptIt();
+                ceAST = parseExpression();
+                accept(Token.DO);
+                cAST = parseCommand();
+                lAST = null;
+                if(currentToken.kind == Token.LEAVE){
+                    acceptIt();
+                    lAST = parseCommand();
+                }
+                accept(Token.END);
+                finish(commandPos);
+                commandAST = new ForCommand(fdAST, efAST,ceAST, false, cAST,lAST,commandPos);
+                break;
+            default:
+                syntacticError("No se esperaba el token actual", currentToken.spelling);
+        }
+        
         break;
     }
       
