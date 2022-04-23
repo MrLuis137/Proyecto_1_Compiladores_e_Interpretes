@@ -271,7 +271,7 @@ public class Parser {
 
     SourcePosition commandPos = new SourcePosition();
     start(commandPos);
-
+    
     switch (currentToken.kind) {
 
     case Token.IDENTIFIER:
@@ -394,23 +394,20 @@ public class Parser {
         }
         break;
     }
-        
-      
-      
-      case Token.FOR:{
-          Identifier iAST;
-          Expression esAST;
-          Expression efAST;
-          
-          acceptIt();
-          iAST = parseIdentifier();
-          accept(Token.FROM);
-          esAST = parseExpression();
-          accept(Token.DOUBLEDOT);
-          efAST = parseExpression();
-          accept(Token.DO);
-          
-      }
+    case Token.FOR:{
+        Identifier iAST;
+        Expression esAST;
+        Expression efAST;
+
+        acceptIt();
+        iAST = parseIdentifier();
+        accept(Token.FROM);
+        esAST = parseExpression();
+        accept(Token.DOUBLEDOT);
+        efAST = parseExpression();
+        accept(Token.DO);
+        break;
+    }
       
     case Token.SEMICOLON:
     case Token.END:
