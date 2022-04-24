@@ -5,6 +5,7 @@ contador := 0;
 repeat while contador < 3
 do
 a := a+1
+
 end;
 repeat
 do

@@ -613,6 +613,8 @@ public class Main extends javax.swing.JFrame {
             ((FileFrame)desktopPane.getSelectedFrame()).clearTable();
             new File(desktopPane.getSelectedFrame().getTitle().replace(".tri", ".tam")).delete();
             
+
+            
             output.setDelegate(delegateConsole);            
             if (compiler.compileProgram(desktopPane.getSelectedFrame().getTitle())) {           
                 output.setDelegate(delegateTAMCode);

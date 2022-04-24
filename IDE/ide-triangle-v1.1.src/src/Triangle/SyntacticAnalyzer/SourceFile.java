@@ -19,7 +19,7 @@ public class SourceFile {
   public static final char EOL = '\n';
   public static final char EOT = '\u0000';
 
-  java.io.File sourceFile;
+  public static java.io.File sourceFile;
   java.io.FileInputStream source;
   int currentLine;
 

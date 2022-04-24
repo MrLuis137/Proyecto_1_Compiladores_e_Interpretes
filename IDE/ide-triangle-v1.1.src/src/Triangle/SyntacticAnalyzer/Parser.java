@@ -84,6 +84,9 @@ import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
+
+import FileGenerators.HtmlGenerator;
+
 import java.util.ArrayList;
 
 public class Parser {
@@ -103,12 +106,14 @@ public class Parser {
 // If so, fetches the next token.
 // If not, reports a syntactic error.
 
+  
+  //error lexico
   void accept (int tokenExpected) throws SyntaxError {
     if (currentToken.kind == tokenExpected) {
       previousTokenPosition = currentToken.position;
       currentToken = lexicalAnalyser.scan();
     } else {
-      syntacticError("\"%\" expected here", Token.spell(tokenExpected));
+      lexicError("\"%\" expected here", Token.spell(tokenExpected));
     }
   }
 
@@ -136,6 +141,26 @@ public class Parser {
   void syntacticError(String messageTemplate, String tokenQuoted) throws SyntaxError {
     SourcePosition pos = currentToken.position;
     errorReporter.reportError(messageTemplate, tokenQuoted, pos);
+    
+    //archivo HTML:
+    String path = Scanner.getSource().sourceFile.getPath();
+    HtmlGenerator html = new HtmlGenerator();
+    try {
+        html.generateHTML(path);
+    }
+    catch(Exception e){
+
+    }
+    
+
+    throw(new SyntaxError());
+  }
+  
+  
+  void lexicError(String messageTemplate, String tokenQuoted) throws SyntaxError {
+    SourcePosition pos = currentToken.position;
+    errorReporter.reportError(messageTemplate, tokenQuoted, pos);
+
     throw(new SyntaxError());
   }
 
@@ -504,7 +529,7 @@ public class Parser {
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-  Expression parseExpression() throws SyntaxError {
+Expression parseExpression() throws SyntaxError {
     Expression expressionAST = null; // in case there's a syntactic error
 
     SourcePosition expressionPos = new SourcePosition();

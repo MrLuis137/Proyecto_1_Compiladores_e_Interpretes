@@ -5,6 +5,7 @@
 
 package Triangle;
 
+import FileGenerators.HtmlGenerator;
 import Triangle.CodeGenerator.Frame;
 import java.awt.event.ActionListener;
 import Triangle.SyntacticAnalyzer.SourceFile;
@@ -64,12 +65,23 @@ public class IDECompiler {
                 if (report.numErrors == 0) {
                     //encoder.saveObjectProgram(sourceName.replace(".tri", ".tam"));
                     success = true;
+                    
+                    
                 }
             }
         }
 
-        if (success)
-            System.out.println("Compilation was successful.");
+        if (success){
+            //archivo HTML:
+            String path = Scanner.getSource().sourceFile.getPath();
+            HtmlGenerator html = new HtmlGenerator();
+            try {
+                html.generateHTML(path);
+            }
+            catch(Exception e){
+
+            }
+            System.out.println("Compilation was successful.");}
         else
             System.out.println("Compilation was unsuccessful.");
         

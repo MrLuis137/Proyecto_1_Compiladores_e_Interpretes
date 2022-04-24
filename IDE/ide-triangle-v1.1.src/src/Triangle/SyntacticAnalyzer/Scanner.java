@@ -17,7 +17,7 @@ package Triangle.SyntacticAnalyzer;
 
 public final class Scanner {
 
-  private SourceFile sourceFile;
+  private static SourceFile sourceFile;
   private boolean debug;
 
   private char currentChar;
@@ -52,6 +52,10 @@ public final class Scanner {
 
   public void enableDebugging() {
     debug = true;
+  }
+  
+  public static SourceFile getSource(){
+      return sourceFile;
   }
 
   // takeIt appends the current character to the current token, and gets
