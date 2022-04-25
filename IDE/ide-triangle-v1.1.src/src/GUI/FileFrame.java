@@ -262,6 +262,8 @@ public class FileFrame extends javax.swing.JInternalFrame {
         astTree.setSize(astScroll.getSize());
         astScroll.add(astTree);
         astScroll.setViewportView(astTree);
+        
+        
     }
     
     /**

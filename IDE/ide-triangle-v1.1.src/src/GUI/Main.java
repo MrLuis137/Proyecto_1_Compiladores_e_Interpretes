@@ -39,6 +39,9 @@ import javax.swing.event.InternalFrameListener;
 import Core.Visitors.TreeVisitor;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import FileGenerators.XmlGenerator;
+import java.util.Enumeration;
+
 /**
  * The Main class. Contains the main form.
  *
@@ -621,6 +624,17 @@ public class Main extends javax.swing.JFrame {
                 //disassembler.Disassemble(desktopPane.getSelectedFrame().getTitle().replace(".tri", ".tam"));
                 ((FileFrame)desktopPane.getSelectedFrame()).setTree((DefaultMutableTreeNode)treeVisitor.visitProgram(compiler.getAST(), null));
                 ((FileFrame)desktopPane.getSelectedFrame()).setTable(tableVisitor.getTable(compiler.getAST()));
+                
+                //llamar al crear XML
+                try {
+                    XmlGenerator xml = new XmlGenerator();
+                    xml.generateXML((DefaultMutableTreeNode)treeVisitor.visitProgram(compiler.getAST(), null),desktopPane.getSelectedFrame().getTitle());
+
+                }
+                catch(Exception e) {
+                    JOptionPane.showMessageDialog(null, "Hubo un error al generar el XML \n" + e, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                
                 
                 runMenuItem.setEnabled(false);
                 buttonRun.setEnabled(false);

@@ -149,7 +149,7 @@ public class Parser {
         html.generateHTML(path);
     }
     catch(Exception e){
-
+        System.out.println("Error al general el HTML");
     }
     
 

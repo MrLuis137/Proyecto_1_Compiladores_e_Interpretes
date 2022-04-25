@@ -18,6 +18,9 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.OutputStream;
+import java.util.Enumeration;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
  
 
 public class XmlGenerator {
@@ -34,7 +37,7 @@ public class XmlGenerator {
         doc = docBuilder.newDocument();
         
         //hacemos el root
-        Element rootElement = doc.createElement("program");
+        Element rootElement = doc.createElement("Program");
         doc.appendChild(rootElement);
         root = rootElement;
         last = rootElement;
@@ -85,12 +88,58 @@ public class XmlGenerator {
     
 
     
-    public void generateXML() throws IOException, TransformerException {
+    public void generateXML(DefaultMutableTreeNode tree, String path) throws IOException, TransformerException {
         System.out.println("----------- " +
                            "Generando XML..." +
                            "----------- ");
-        // print XML to system console
-        writeXml(doc, new FileOutputStream("output.xml"));
+        
+        //procedemos a viajar por el arbol y hacer el xml
+        traverseTree(tree, root);
+        
+        path = path.replace(".tri", ".xml");
+        
+        writeXml(doc, new FileOutputStream(path));
+    }
+    
+    private void traverseTree(DefaultMutableTreeNode tree, Element father){
+       
+    if (tree.isLeaf()){
+        return;
+    }
+        
+    
+    //para manejar las hojras del arbol(values)
+    Boolean hasLeaf = false;
+    String leafName = "";
+    
+    //iteramos por los hijos a ver si hay una hoja
+    Enumeration<TreeNode> children = tree.children();
+    while(children.hasMoreElements()){
+        TreeNode child = children.nextElement(); 
+        if(child.isLeaf()){
+            hasLeaf = true;
+            leafName = child.toString();
+            break;
+        }
+    }
+    
+    String name = tree.toString();
+    name = name.replace(" ","");
+    Element e;
+    if (hasLeaf){
+        e = newChildSP(father,name,leafName);  
+    }
+    else{
+        e = newChildSP(father,name);
+    }
+    
+
+    children = tree.children();
+    while(children.hasMoreElements()){
+        traverseTree((DefaultMutableTreeNode) children.nextElement(), e);
+    }
+
+    
     }
     
     // write doc to output stream
