@@ -35,6 +35,7 @@ public class ForCommand extends Command {
         this.fdAST = fdAST;
         this.ceAST =ceAST;
         this.isWhile = isWhile;
+        
     }
     
    
