@@ -182,7 +182,7 @@ public class Parser {
       Command cAST = parseCommand();
       programAST = new Program(cAST, previousTokenPosition);
       if (currentToken.kind != Token.EOT) {
-        syntacticError("\"%\" not expected after end of program",
+        lexicError("\"%\" not expected after end of program",
           currentToken.spelling);
       }
     }

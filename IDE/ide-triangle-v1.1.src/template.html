@@ -133,11 +133,12 @@
     "else",
     "elsif",
     "end",
-    "func",
     "for",
     "from",
+    "func",
     "if",
     "in",
+    "leave",
     "let",
     "nothing",
     "of",
@@ -151,7 +152,7 @@
     "until",
     "var",
     "while",
-    "when",]
+    "when"]
 
     var codigoFinal = ""
     var isComment = false
@@ -199,14 +200,13 @@
 
                 
                 if (palabrasReservadas.includes(tempWord)) {
-                    console.log(word)
                     word = makeBold(word)
                 }
                 
 
                 //encontramos palabras entre comillas simples
                 word = word.replace(new RegExp("('[^']+')", "g"), makeblue("$1"))
-                
+
                 //encontramos caracteres numericos
                 for (let i = 0; i < 10; i++){
                     word = word.replace(new RegExp("(" + i + ")", "g"), makeblue("$1"))

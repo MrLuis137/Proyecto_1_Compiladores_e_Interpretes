@@ -98,8 +98,7 @@ in
 contador := 0;
 repeat while contador &lt; 3
 do
-a := a+1
-
+b := 'r'
 end;
 repeat
 do
@@ -133,11 +132,12 @@ end</code></pre>
     "else",
     "elsif",
     "end",
-    "func",
     "for",
     "from",
+    "func",
     "if",
     "in",
+    "leave",
     "let",
     "nothing",
     "of",
@@ -151,7 +151,7 @@ end</code></pre>
     "until",
     "var",
     "while",
-    "when",]
+    "when"]
 
     var codigoFinal = ""
     var isComment = false
@@ -199,14 +199,13 @@ end</code></pre>
 
                 
                 if (palabrasReservadas.includes(tempWord)) {
-                    console.log(word)
                     word = makeBold(word)
                 }
                 
 
                 //encontramos palabras entre comillas simples
                 word = word.replace(new RegExp("('[^']+')", "g"), makeblue("$1"))
-                
+
                 //encontramos caracteres numericos
                 for (let i = 0; i < 10; i++){
                     word = word.replace(new RegExp("(" + i + ")", "g"), makeblue("$1"))
