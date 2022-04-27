@@ -26,6 +26,8 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCommand;
+import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -436,6 +438,17 @@ public class TreeVisitor implements Visitor {
         
         return(t);             
     }
+    
+    //Added
+    public DefaultMutableTreeNode createQuinary(String caption, AST child1, AST child2, AST child3, AST child4,AST child5) {
+        DefaultMutableTreeNode t = new DefaultMutableTreeNode(caption);
+        t.add((DefaultMutableTreeNode)child1.visit(this, null));
+        t.add((DefaultMutableTreeNode)child2.visit(this, null));
+        t.add((DefaultMutableTreeNode)child3.visit(this, null));
+        t.add((DefaultMutableTreeNode)child4.visit(this, null));
+        t.add((DefaultMutableTreeNode)child5.visit(this, null));
+        return(t);             
+    }
     // </editor-fold>
 
     @Override
@@ -456,5 +469,27 @@ public class TreeVisitor implements Visitor {
         else{
             return(createBinary("Repeat Do until", ast.cAST, ast.eAST));
         }  }
+
+    @Override
+    public Object visitForCommand(ForCommand ast, Object o) {
+       if(ast.ceAST != null && ast.lAST != null){
+           return(createQuinary("For", ast.fdAST,ast.eAST, ast.ceAST, ast.cAST, ast.lAST));
+       }
+       else if(ast.ceAST != null && ast.lAST == null){
+           return(createQuaternary("For", ast.fdAST, ast.eAST, ast.ceAST, ast.cAST));
+       }
+       else if(ast.ceAST == null &&  ast.lAST != null){
+           return(createQuaternary("For", ast.fdAST,ast.eAST, ast.cAST, ast.lAST));
+       }
+       else{
+           return (createTernary("For", ast.fdAST, ast.eAST, ast.cAST));
+       }
+    
+    }
+
+    @Override
+    public Object visitForCommandDef(ForCommandDefinition ast, Object o) {
+        return createBinary("for def", ast.iAST, ast.esAST);
+    }
 
  }

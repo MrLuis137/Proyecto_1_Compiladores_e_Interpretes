@@ -11,8 +11,8 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  * @author lalem
  */
 public class ForCommandDefinition extends Command{
-    Identifier iAST;
-    Expression esAST;
+    public Identifier iAST;
+    public Expression esAST;
     
     public ForCommandDefinition(Identifier iAST, Expression esAST, SourcePosition postion){
         super(postion);
@@ -22,7 +22,7 @@ public class ForCommandDefinition extends Command{
         
     @Override
     public Object visit(Visitor v, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return v.visitForCommandDef(this, o);
     }
     
     
