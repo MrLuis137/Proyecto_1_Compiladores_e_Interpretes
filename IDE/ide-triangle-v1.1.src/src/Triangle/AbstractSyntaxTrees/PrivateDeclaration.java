@@ -10,19 +10,20 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  *
  * @author lalem
  */
-public class ForCommandDefinition extends Command{
-    public Identifier iAST;
-    public Expression esAST;
+public class PrivateDeclaration extends Declaration {
     
-    public ForCommandDefinition(Identifier iAST, Expression esAST, SourcePosition postion){
-        super(postion);
-        this.iAST = iAST;
-        this.esAST = esAST;
+    public Declaration dAST;
+    public Declaration dAST2;
+    
+    public PrivateDeclaration (Declaration dAST, Declaration dAST2, SourcePosition pos){
+        super(pos);
+        this.dAST = dAST;
+        this.dAST2 = dAST2;
     }
-        
+
     @Override
     public Object visit(Visitor v, Object o) {
-        return v.visitForCommandDef(this, o);
+        return v.visitPrivateDeclaration(this, o);
     }
     
     

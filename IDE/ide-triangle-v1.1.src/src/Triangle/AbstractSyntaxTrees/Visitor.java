@@ -20,11 +20,18 @@ public interface Visitor {
   public abstract Object visitAssignCommand(AssignCommand ast, Object o);
   public abstract Object visitCallCommand(CallCommand ast, Object o);
   public abstract Object visitEmptyCommand(EmptyCommand ast, Object o);
+  public abstract Object visitForCommand(ForCommand ast, Object o);//a
+  public abstract Object visitForCommandDef(ForCommandDefinition ast, Object o);//a
   public abstract Object visitIfCommand(IfCommand ast, Object o);
   public abstract Object visitLetCommand(LetCommand ast, Object o);
   public abstract Object visitSequentialCommand(SequentialCommand ast, Object o);
-  public abstract Object visitRepeat(Repeat ast, Object o);
-  public abstract Object visitRepeatDo(RepeatDo ast, Object o);
+  public abstract Object visitRepeat(Repeat ast, Object o);//a
+  public abstract Object visitRepeatDo(RepeatDo ast, Object o);//a
+  public abstract Object visitNothing(Nothing ast, Object o);
+  public abstract Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o);
+  public abstract Object visitPrivateDeclaration(PrivateDeclaration ast, Object o);
+  public abstract Object visitProcFunc(ProcFunc ast, Object o);
+  
 
   // Expressions
   public abstract Object visitArrayExpression(ArrayExpression ast, Object o);
@@ -48,7 +55,9 @@ public interface Visitor {
   public abstract Object visitTypeDeclaration(TypeDeclaration ast, Object o);
   public abstract Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object o);
   public abstract Object visitVarDeclaration(VarDeclaration ast, Object o);
-
+  public abstract Object visitInitializedVarDeclaration(InitializedVarDeclaration ast, Object o);
+  
+  
   // Array Aggregates
   public abstract Object visitMultipleArrayAggregate(MultipleArrayAggregate ast, Object o);
   public abstract Object visitSingleArrayAggregate(SingleArrayAggregate ast, Object o);

@@ -11,12 +11,12 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  * @author lalem
  */
 public class ForCommand extends Command {
-    Expression eAST;
-    Command cAST;
-    Command lAST; 
-    ForCommandDefinition fdAST;
-    Expression ceAST;
-    boolean isWhile;
+    public Expression eAST;
+    public Command cAST;
+    public Command lAST; 
+    public ForCommandDefinition fdAST;
+    public Expression ceAST;
+    public boolean isWhile;
      
     //For sin condicion
     public ForCommand(ForCommandDefinition fdAST, Expression eAST, Command cAST, Command lAST, SourcePosition pos) {
@@ -35,12 +35,13 @@ public class ForCommand extends Command {
         this.fdAST = fdAST;
         this.ceAST =ceAST;
         this.isWhile = isWhile;
+        
     }
     
    
     @Override
     public Object visit(Visitor v, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return v.visitForCommand(this, o);
     }
     
 }

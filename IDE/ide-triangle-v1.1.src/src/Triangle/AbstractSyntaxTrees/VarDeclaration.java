@@ -23,6 +23,7 @@ public class VarDeclaration extends Declaration {
     super (thePosition);
     I = iAST;
     T = tAST;
+    
   }
 
   public Object visit(Visitor v, Object o) {

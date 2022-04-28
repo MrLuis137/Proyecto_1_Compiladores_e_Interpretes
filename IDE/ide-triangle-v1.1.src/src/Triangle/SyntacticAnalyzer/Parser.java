@@ -38,6 +38,159 @@ import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ForCommand;;
+import Triangle.AbstractSyntaxTrees.Nothing;
+import Triangle.AbstractSyntaxTrees.ProcFunc;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
+import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
+import Triangle.AbstractSyntaxTrees.FormalParameter;
+import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.FuncActualParameter;
+import Triangle.AbstractSyntaxTrees.FuncDeclaration;
+import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
+import Triangle.AbstractSyntaxTrees.Identifier;
+import Triangle.AbstractSyntaxTrees.IfCommand;
+import Triangle.AbstractSyntaxTrees.IfExpression;
+import Triangle.AbstractSyntaxTrees.IntegerExpression;
+import Triangle.AbstractSyntaxTrees.IntegerLiteral;
+import Triangle.AbstractSyntaxTrees.LetCommand;
+import Triangle.AbstractSyntaxTrees.LetExpression;
+import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
+import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
+import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
+import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
+import Triangle.AbstractSyntaxTrees.ProcActualParameter;
+import Triangle.AbstractSyntaxTrees.ProcDeclaration;
+import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.Program;
+import Triangle.AbstractSyntaxTrees.RecordAggregate;
+import Triangle.AbstractSyntaxTrees.RecordExpression;
+import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
+import Triangle.AbstractSyntaxTrees.Repeat;
+import Triangle.AbstractSyntaxTrees.RepeatDo;
+import Triangle.AbstractSyntaxTrees.SequentialCommand;
+import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
+import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
+import Triangle.AbstractSyntaxTrees.SimpleVname;
+import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
+import Triangle.AbstractSyntaxTrees.SingleArrayAggregate;
+import Triangle.AbstractSyntaxTrees.SingleFieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.SingleRecordAggregate;
+import Triangle.AbstractSyntaxTrees.SubscriptVname;
+import Triangle.AbstractSyntaxTrees.TypeDeclaration;
+import Triangle.AbstractSyntaxTrees.TypeDenoter;
+import Triangle.AbstractSyntaxTrees.UnaryExpression;
+import Triangle.AbstractSyntaxTrees.VarActualParameter;
+import Triangle.AbstractSyntaxTrees.VarDeclaration;
+import Triangle.AbstractSyntaxTrees.VarFormalParameter;
+import Triangle.AbstractSyntaxTrees.Vname;
+import Triangle.AbstractSyntaxTrees.VnameExpression;
+import Triangle.AbstractSyntaxTrees.Nothing;
+import Triangle.AbstractSyntaxTrees.ProcFunc;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
+import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
+import Triangle.AbstractSyntaxTrees.FormalParameter;
+import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.FuncActualParameter;
+import Triangle.AbstractSyntaxTrees.FuncDeclaration;
+import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
+import Triangle.AbstractSyntaxTrees.Identifier;
+import Triangle.AbstractSyntaxTrees.IfCommand;
+import Triangle.AbstractSyntaxTrees.IfExpression;
+import Triangle.AbstractSyntaxTrees.InitializedVarDeclaration;
+import Triangle.AbstractSyntaxTrees.IntegerExpression;
+import Triangle.AbstractSyntaxTrees.IntegerLiteral;
+import Triangle.AbstractSyntaxTrees.LetCommand;
+import Triangle.AbstractSyntaxTrees.LetExpression;
+import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
+import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
+import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
+import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.ProcActualParameter;
+import Triangle.AbstractSyntaxTrees.ProcDeclaration;
+import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.Program;
+import Triangle.AbstractSyntaxTrees.RecordAggregate;
+import Triangle.AbstractSyntaxTrees.RecordExpression;
+import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
+import Triangle.AbstractSyntaxTrees.Repeat;
+import Triangle.AbstractSyntaxTrees.RepeatDo;
+import Triangle.AbstractSyntaxTrees.SequentialCommand;
+import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
+import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
+import Triangle.AbstractSyntaxTrees.SimpleVname;
+import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
+import Triangle.AbstractSyntaxTrees.SingleArrayAggregate;
+import Triangle.AbstractSyntaxTrees.SingleFieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.SingleRecordAggregate;
+import Triangle.AbstractSyntaxTrees.SubscriptVname;
+import Triangle.AbstractSyntaxTrees.TypeDeclaration;
+import Triangle.AbstractSyntaxTrees.TypeDenoter;
+import Triangle.AbstractSyntaxTrees.UnaryExpression;
+import Triangle.AbstractSyntaxTrees.VarActualParameter;
+import Triangle.AbstractSyntaxTrees.VarDeclaration;
+import Triangle.AbstractSyntaxTrees.VarFormalParameter;
+import Triangle.AbstractSyntaxTrees.Vname;
+import Triangle.AbstractSyntaxTrees.VnameExpression;
+import Triangle.AbstractSyntaxTrees.Nothing;
+import Triangle.AbstractSyntaxTrees.ProcFunc;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
+import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
+import Triangle.AbstractSyntaxTrees.FormalParameter;
+import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.FuncActualParameter;
+import Triangle.AbstractSyntaxTrees.FuncDeclaration;
+import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
+import Triangle.AbstractSyntaxTrees.Identifier;
+import Triangle.AbstractSyntaxTrees.IfCommand;
+import Triangle.AbstractSyntaxTrees.IfExpression;
+import Triangle.AbstractSyntaxTrees.IntegerExpression;
+import Triangle.AbstractSyntaxTrees.IntegerLiteral;
+import Triangle.AbstractSyntaxTrees.LetCommand;
+import Triangle.AbstractSyntaxTrees.LetExpression;
+import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
+import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
+import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
+import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
+import Triangle.AbstractSyntaxTrees.ProcActualParameter;
+import Triangle.AbstractSyntaxTrees.ProcDeclaration;
+import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.Program;
+import Triangle.AbstractSyntaxTrees.RecordAggregate;
+import Triangle.AbstractSyntaxTrees.RecordExpression;
+import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
+import Triangle.AbstractSyntaxTrees.Repeat;
+import Triangle.AbstractSyntaxTrees.RepeatDo;
+import Triangle.AbstractSyntaxTrees.SequentialCommand;
+import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
+import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
+import Triangle.AbstractSyntaxTrees.SimpleVname;
+import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
+import Triangle.AbstractSyntaxTrees.SingleArrayAggregate;
+import Triangle.AbstractSyntaxTrees.SingleFieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.SingleRecordAggregate;
+import Triangle.AbstractSyntaxTrees.SubscriptVname;
+import Triangle.AbstractSyntaxTrees.TypeDeclaration;
+import Triangle.AbstractSyntaxTrees.TypeDenoter;
+import Triangle.AbstractSyntaxTrees.UnaryExpression;
+import Triangle.AbstractSyntaxTrees.VarActualParameter;
+import Triangle.AbstractSyntaxTrees.VarDeclaration;
+import Triangle.AbstractSyntaxTrees.VarFormalParameter;
+import Triangle.AbstractSyntaxTrees.Vname;
+import Triangle.AbstractSyntaxTrees.VnameExpression;
+import Triangle.AbstractSyntaxTrees.Nothing;
+import Triangle.AbstractSyntaxTrees.ProcFunc;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
@@ -84,9 +237,7 @@ import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
-
 import FileGenerators.HtmlGenerator;
-
 import java.util.ArrayList;
 
 public class Parser {
@@ -279,7 +430,6 @@ public class Parser {
 
   Command parseCommand() throws SyntaxError {
     Command commandAST = null; // in case there's a syntactic error
-
     SourcePosition commandPos = new SourcePosition();
 
     start(commandPos);
@@ -322,13 +472,20 @@ public class Parser {
       }
       break;
     
-
+      
     /*case Token.BEGIN:
       acceptIt();
       commandAST = parseCommand();
       accept(Token.END);
       break; */
-
+     
+    case Token.NOTHING:
+    {
+        acceptIt();
+        finish(commandPos);
+        commandAST = new Nothing(commandPos);
+        break;
+    }
     case Token.LET:
       {
         acceptIt();
@@ -353,6 +510,7 @@ public class Parser {
         else{
             accept(Token.ELSE);
             c2AST = parseCommand();
+            accept(Token.END);
         }
         finish(commandPos);
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
@@ -369,20 +527,17 @@ public class Parser {
             acceptIt();
             cAST = parseCommand();
             switch (currentToken.kind) {
-                case Token.WHILE:
+                case Token.WHILE -> {
                     acceptIt();
                     eAST = parseExpression();
-
-                    break;
-                case Token.UNTIL:
-
+                }
+                case Token.UNTIL -> {
                     acceptIt();
                     eAST = parseExpression();
                     isWhile = false;
-                    break;
+                }
 
-                default:
-                    syntacticError("Expected until or while",
+                default -> syntacticError("Expected until or while",
                           currentToken.spelling);
                 } 
             Command lAST = null;
@@ -395,17 +550,14 @@ public class Parser {
             commandAST = new RepeatDo(cAST, eAST, lAST,isWhile, commandPos);
           
         }else{
-            if(Token.WHILE == currentToken.kind ){
-                acceptIt();
-              }
-            else if(Token.UNTIL == currentToken.kind)
-            {
-                acceptIt();
-                isWhile = false;
-            }
-            else{
-                syntacticError("Expected do until or while",
-                currentToken.spelling);
+            switch (currentToken.kind) {
+                case Token.WHILE -> acceptIt();
+                case Token.UNTIL -> {
+                    acceptIt();
+                    isWhile = false;
+                }
+                default -> syntacticError("Expected do until or while",
+                        currentToken.spelling);
             }
             eAST = parseExpression();
             accept(Token.DO);
@@ -516,6 +668,7 @@ public class Parser {
         else{
             accept(Token.ELSE);
             c2AST = parseSingleCommand();
+            accept(Token.END);
         }
         finish(commandPos);
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
@@ -759,20 +912,114 @@ Expression parseExpression() throws SyntaxError {
 
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
-    declarationAST = parseSingleDeclaration();
+    declarationAST = parseCompoundDeclaration();
     while (currentToken.kind == Token.SEMICOLON) {
       acceptIt();
-      Declaration d2AST = parseSingleDeclaration();
+      Declaration d2AST = parseCompoundDeclaration();
       finish(declarationPos);
       declarationAST = new SequentialDeclaration(declarationAST, d2AST,
         declarationPos);
     }
     return declarationAST;
   }
+  
+  Declaration parseCompoundDeclaration( ) throws SyntaxError{
+    Declaration declarationAST = null; // in case there's a syntactic error
+    SourcePosition declarationPos = new SourcePosition();
+    start(declarationPos);
+    
+    
+    switch (currentToken.kind){
+        case(Token.RECURSIVE):
+            acceptIt();
+                declarationAST = parseProcFuncs();
+            break;
+        case(Token.PRIVATE):
+            acceptIt();
+            Declaration dAST = parseDeclaration();
+            accept(Token.IN);
+            Declaration dAST2 = parseDeclaration();
+            accept(Token.END);
+            declarationAST = new PrivateDeclaration(dAST,dAST2, declarationPos);
+            break;
+        default:
+            declarationAST = parseSingleDeclaration();
+    }
+    
+    return declarationAST;
+  }
+  
+  ProcFunc parseProcFunc() throws SyntaxError{
+    ProcFunc procFuncDeclaration = null;
+    
+    SourcePosition declarationPos = new SourcePosition();
+    start(declarationPos);
+    switch(currentToken.kind){
+     case Token.PROC:
+      {
+        acceptIt();
+        Identifier iAST = parseIdentifier();
+        accept(Token.LPAREN);
+        FormalParameterSequence fpsAST = parseFormalParameterSequence();
+        accept(Token.RPAREN);
+        accept(Token.IS);
+        Command cAST = parseSingleCommand();
+        accept(Token.END);
+        finish(declarationPos);
+        ProcDeclaration proc = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
+        procFuncDeclaration = new ProcFunc(proc, declarationPos);
+      }
+      break;
+
+    case Token.FUNC:
+      {
+        acceptIt();
+        Identifier iAST = parseIdentifier();
+        accept(Token.LPAREN);
+        FormalParameterSequence fpsAST = parseFormalParameterSequence();
+        accept(Token.RPAREN);
+        accept(Token.COLON);
+        TypeDenoter tAST = parseTypeDenoter();
+        accept(Token.IS);
+        Expression eAST = parseExpression();
+        finish(declarationPos);
+        FuncDeclaration func = new FuncDeclaration(iAST, fpsAST, tAST, eAST,declarationPos);
+        procFuncDeclaration = new ProcFunc(func, declarationPos);
+      }
+      break;
+    default:
+        syntacticError("\"%\" cannot start a declaration",
+        currentToken.spelling);
+    }
+    return procFuncDeclaration;
+  }
+  
+  RecursiveDeclaration parseProcFuncs() throws SyntaxError{
+    RecursiveDeclaration pfcAST = null; // in case there's a syntactic error
+    SourcePosition declarationPos = new SourcePosition();
+    start(declarationPos);
+    ProcFunc pfAST1= parseProcFunc();
+    accept(Token.AND);
+    RecursiveDeclaration pfAST2 = parseRestOfPropFunc();
+    pfcAST = new RecursiveDeclaration(pfAST1, pfAST2, declarationPos);
+    return pfcAST;
+  }
+  
+  RecursiveDeclaration parseRestOfPropFunc() throws SyntaxError{
+        RecursiveDeclaration pfcAST = null; // in case there's a syntactic error
+        RecursiveDeclaration pfAST2 = null;
+        SourcePosition declarationPos = new SourcePosition();
+        ProcFunc pfAST1= parseProcFunc();
+        if(currentToken.kind == Token.AND){
+            acceptIt();
+            pfAST2 = parseRestOfPropFunc();
+        }
+        pfcAST = new RecursiveDeclaration(pfAST1, pfAST2, declarationPos);
+        return pfcAST;
+  }
 
   Declaration parseSingleDeclaration() throws SyntaxError {
     Declaration declarationAST = null; // in case there's a syntactic error
-
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
 
@@ -793,41 +1040,31 @@ Expression parseExpression() throws SyntaxError {
       {
         acceptIt();
         Identifier iAST = parseIdentifier();
-        accept(Token.COLON);
-        TypeDenoter tAST = parseTypeDenoter();
-        finish(declarationPos);
-        declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+        Expression eAST;
+        if(currentToken.kind == Token.BECOMES){
+            acceptIt();
+            eAST = parseExpression();
+            finish(declarationPos);
+           declarationAST = new InitializedVarDeclaration(iAST, eAST, declarationPos);
+        }else{
+           accept(Token.COLON);
+           TypeDenoter tAST = parseTypeDenoter();
+           finish(declarationPos);
+           declarationAST = new VarDeclaration(iAST, tAST, declarationPos);
+        }
+       
       }
       break;
 
     case Token.PROC:
       {
-        acceptIt();
-        Identifier iAST = parseIdentifier();
-        accept(Token.LPAREN);
-        FormalParameterSequence fpsAST = parseFormalParameterSequence();
-        accept(Token.RPAREN);
-        accept(Token.IS);
-        Command cAST = parseSingleCommand();
-        finish(declarationPos);
-        declarationAST = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
+        declarationAST = parseProcFunc();
       }
       break;
 
     case Token.FUNC:
       {
-        acceptIt();
-        Identifier iAST = parseIdentifier();
-        accept(Token.LPAREN);
-        FormalParameterSequence fpsAST = parseFormalParameterSequence();
-        accept(Token.RPAREN);
-        accept(Token.COLON);
-        TypeDenoter tAST = parseTypeDenoter();
-        accept(Token.IS);
-        Expression eAST = parseExpression();
-        finish(declarationPos);
-        declarationAST = new FuncDeclaration(iAST, fpsAST, tAST, eAST,
-          declarationPos);
+        declarationAST = parseProcFunc();
       }
       break;
 
@@ -1081,10 +1318,15 @@ Expression parseExpression() throws SyntaxError {
       {
         acceptIt();
         IntegerLiteral ilAST = parseIntegerLiteral();
+        IntegerLiteral ilAST2 = null;
+        if(currentToken.kind == Token.DOUBLEDOT){
+            acceptIt();
+            ilAST2 = parseIntegerLiteral();
+        }
         accept(Token.OF);
         TypeDenoter tAST = parseTypeDenoter();
         finish(typePos);
-        typeAST = new ArrayTypeDenoter(ilAST, tAST, typePos);
+        typeAST = new ArrayTypeDenoter(ilAST,ilAST2, tAST, typePos);
       }
       break;
 

@@ -26,12 +26,15 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.ForCommand;
+import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
 import Triangle.AbstractSyntaxTrees.Identifier;
 import Triangle.AbstractSyntaxTrees.IfCommand;
 import Triangle.AbstractSyntaxTrees.IfExpression;
+import Triangle.AbstractSyntaxTrees.InitializedVarDeclaration;
 import Triangle.AbstractSyntaxTrees.IntTypeDenoter;
 import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
@@ -42,10 +45,14 @@ import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
 import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
+import Triangle.AbstractSyntaxTrees.Nothing;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.ProcFunc;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
@@ -286,7 +293,10 @@ public class TreeVisitor implements Visitor {
     }
     
     public Object visitArrayTypeDenoter(ArrayTypeDenoter ast, Object obj) {
-        return(createBinary("Array Type Denoter", ast.IL, ast.T));
+        if(ast.ilAST2 == null){
+             return(createBinary("Array Type Denoter", ast.IL, ast.T));
+        }
+        return(createTernary("Array Type Denoter", ast.IL,ast.ilAST2, ast.T));
     }
     
     public Object visitBoolTypeDenoter(BoolTypeDenoter ast, Object obj) {
@@ -436,6 +446,17 @@ public class TreeVisitor implements Visitor {
         
         return(t);             
     }
+    
+    //Added
+    public DefaultMutableTreeNode createQuinary(String caption, AST child1, AST child2, AST child3, AST child4,AST child5) {
+        DefaultMutableTreeNode t = new DefaultMutableTreeNode(caption);
+        t.add((DefaultMutableTreeNode)child1.visit(this, null));
+        t.add((DefaultMutableTreeNode)child2.visit(this, null));
+        t.add((DefaultMutableTreeNode)child3.visit(this, null));
+        t.add((DefaultMutableTreeNode)child4.visit(this, null));
+        t.add((DefaultMutableTreeNode)child5.visit(this, null));
+        return(t);             
+    }
     // </editor-fold>
 
     @Override
@@ -456,5 +477,61 @@ public class TreeVisitor implements Visitor {
         else{
             return(createBinary("Repeat Do until", ast.cAST, ast.eAST));
         }  }
+
+    @Override
+    public Object visitForCommand(ForCommand ast, Object o) {
+       if(ast.ceAST != null && ast.lAST != null){
+           return(createQuinary("For", ast.fdAST,ast.eAST, ast.ceAST, ast.cAST, ast.lAST));
+       }
+       else if(ast.ceAST != null && ast.lAST == null){
+           return(createQuaternary("For", ast.fdAST, ast.eAST, ast.ceAST, ast.cAST));
+       }
+       else if(ast.ceAST == null &&  ast.lAST != null){
+           return(createQuaternary("For", ast.fdAST,ast.eAST, ast.cAST, ast.lAST));
+       }
+       else{
+           return (createTernary("For", ast.fdAST, ast.eAST, ast.cAST));
+       }
+    
+    }
+
+    @Override
+    public Object visitForCommandDef(ForCommandDefinition ast, Object o) {
+        return createBinary("for definiton", ast.iAST, ast.esAST);
+    }
+
+    @Override
+    public Object visitNothing(Nothing ast, Object o) {
+        return createNullary("Nothing");
+    }
+
+    @Override
+    public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
+        if(ast.pfcsAST == null){
+            return createUnary("Recursive Declaration", ast.pfAST);
+        }
+        return createBinary("Recursive Declaration", ast.pfAST, ast.pfcsAST);
+    }
+
+    @Override
+    public Object visitProcFunc(ProcFunc ast, Object o) {
+        if(ast.fAST ==null ){
+            return createUnary("Proc-Func", ast.pAST);
+        }
+        else{
+            return createUnary("Proc-Func", ast.fAST);
+        }
+        
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        return createBinary("Private Declaration", ast.dAST, ast.dAST2);
+    }
+
+    @Override
+    public Object visitInitializedVarDeclaration(InitializedVarDeclaration ast, Object o) {
+       return createBinary("Initialized Var declaration", ast.I, ast.E);
+    }
 
  }

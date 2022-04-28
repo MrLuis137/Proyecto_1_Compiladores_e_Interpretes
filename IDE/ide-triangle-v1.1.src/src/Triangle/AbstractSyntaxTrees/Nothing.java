@@ -10,20 +10,16 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  *
  * @author lalem
  */
-public class ForCommandDefinition extends Command{
-    public Identifier iAST;
-    public Expression esAST;
-    
-    public ForCommandDefinition(Identifier iAST, Expression esAST, SourcePosition postion){
-        super(postion);
-        this.iAST = iAST;
-        this.esAST = esAST;
+public class Nothing extends Command{
+
+    public Nothing(SourcePosition pos) {
+        super(pos);
     }
-        
+    
+    
     @Override
     public Object visit(Visitor v, Object o) {
-        return v.visitForCommandDef(this, o);
+        return v.visitNothing(this, o);
     }
-    
     
 }
