@@ -6,10 +6,11 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-/**
- *
- * @author lalem
- */
+/*---------------------------------------------------------------
+****************************************************************
+* AST de Repeat
+* Editores: Luis Diego AZ
+****************************************************************/
 public class Repeat extends Command {
     public Expression eAST;
     public Command cAST;

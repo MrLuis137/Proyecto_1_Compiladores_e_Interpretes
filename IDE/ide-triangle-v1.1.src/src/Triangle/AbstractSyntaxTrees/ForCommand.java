@@ -6,10 +6,11 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-/**
- *
- * @author lalem
- */
+/*---------------------------------------------------------------
+****************************************************************
+* AST de For Command
+* Editores: Luis Diego AZ
+****************************************************************/
 public class ForCommand extends Command {
     public Expression eAST;
     public Command cAST;

@@ -15,7 +15,6 @@
 package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
-import java.util.ArrayList;
 
 public class IfCommand extends Command {
 

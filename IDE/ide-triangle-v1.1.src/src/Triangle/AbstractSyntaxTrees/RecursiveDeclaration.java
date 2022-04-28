@@ -5,12 +5,12 @@
 package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
-import java.util.ArrayList;
 
-/**
- *
- * @author lalem
- */
+/*---------------------------------------------------------------
+****************************************************************
+* AST de recurive Declatation
+* Editores: Tania Sanchez
+****************************************************************/
 public class RecursiveDeclaration extends Declaration{
 
     public ProcFunc pfAST;

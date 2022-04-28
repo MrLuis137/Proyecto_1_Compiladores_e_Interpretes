@@ -22,7 +22,11 @@ import java.util.Enumeration;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
  
-
+/*---------------------------------------------------------------
+****************************************************************
+* Generador de XML
+* Editores: Oswaldo Ramirez
+****************************************************************/
 public class XmlGenerator {
     
     

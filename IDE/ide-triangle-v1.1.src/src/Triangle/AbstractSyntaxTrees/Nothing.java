@@ -6,10 +6,11 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-/**
- *
- * @author lalem
- */
+/*---------------------------------------------------------------
+****************************************************************
+* AST de nothhing
+* Editores: Luis Diego AZ
+****************************************************************/
 public class Nothing extends Command{
 
     public Nothing(SourcePosition pos) {

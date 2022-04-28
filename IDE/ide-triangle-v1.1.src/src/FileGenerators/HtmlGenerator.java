@@ -13,6 +13,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;  
 import org.jsoup.nodes.Element;
 
+/*---------------------------------------------------------------
+****************************************************************
+* Generador de HTML
+* Editores: Oswaldo Ramirez
+****************************************************************/
 public class HtmlGenerator {
     
     //generamos el HTML

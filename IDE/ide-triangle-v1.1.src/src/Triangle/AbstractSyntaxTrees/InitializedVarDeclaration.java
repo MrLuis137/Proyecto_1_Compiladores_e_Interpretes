@@ -6,10 +6,11 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-/**
- *
- * @author lalem
- */
+/*---------------------------------------------------------------
+****************************************************************
+* AST de Variable inicializada
+* Editores: Tania Sanchez 
+****************************************************************/
  public class InitializedVarDeclaration extends Declaration{
     
     public Identifier I;

@@ -6,10 +6,11 @@ package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
 
-/**
- *
- * @author lalem
- */
+/*---------------------------------------------------------------
+****************************************************************
+* AST de proc-func
+* Editores: Tania Sanchez
+****************************************************************/
 public class ProcFunc extends Declaration{
     
     public ProcDeclaration pAST;
