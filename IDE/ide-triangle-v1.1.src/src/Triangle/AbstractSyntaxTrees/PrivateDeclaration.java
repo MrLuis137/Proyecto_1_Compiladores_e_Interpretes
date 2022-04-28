@@ -10,27 +10,21 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
  *
  * @author lalem
  */
-public class ProcFunc extends Declaration{
+public class PrivateDeclaration extends Declaration {
     
-    public ProcDeclaration pAST;
-    public FuncDeclaration fAST;
+    public Declaration dAST;
+    public Declaration dAST2;
     
-    public ProcFunc(ProcDeclaration pAST, SourcePosition pos ){
+    public PrivateDeclaration (Declaration dAST, Declaration dAST2, SourcePosition pos){
         super(pos);
-        this.pAST = pAST;
-        fAST = null;
-    }
-    
-    public ProcFunc(FuncDeclaration fAST, SourcePosition pos ){
-        super(pos);
-        pAST = null;
-        this.fAST = fAST;
+        this.dAST = dAST;
+        this.dAST2 = dAST2;
     }
 
     @Override
     public Object visit(Visitor v, Object o) {
-        return v.visitProcFunc(this, o);
-
+        return v.visitPrivateDeclaration(this, o);
     }
+    
     
 }

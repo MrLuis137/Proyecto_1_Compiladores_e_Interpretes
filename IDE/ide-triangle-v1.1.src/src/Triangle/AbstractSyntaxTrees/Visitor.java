@@ -27,6 +27,11 @@ public interface Visitor {
   public abstract Object visitSequentialCommand(SequentialCommand ast, Object o);
   public abstract Object visitRepeat(Repeat ast, Object o);//a
   public abstract Object visitRepeatDo(RepeatDo ast, Object o);//a
+  public abstract Object visitNothing(Nothing ast, Object o);
+  public abstract Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o);
+  public abstract Object visitPrivateDeclaration(PrivateDeclaration ast, Object o);
+  public abstract Object visitProcFunc(ProcFunc ast, Object o);
+  
 
   // Expressions
   public abstract Object visitArrayExpression(ArrayExpression ast, Object o);

@@ -38,102 +38,9 @@ import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ForCommand;;
-import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
-import Triangle.AbstractSyntaxTrees.FormalParameter;
-import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.FuncActualParameter;
-import Triangle.AbstractSyntaxTrees.FuncDeclaration;
-import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
-import Triangle.AbstractSyntaxTrees.Identifier;
-import Triangle.AbstractSyntaxTrees.IfCommand;
-import Triangle.AbstractSyntaxTrees.IfExpression;
-import Triangle.AbstractSyntaxTrees.IntegerExpression;
-import Triangle.AbstractSyntaxTrees.IntegerLiteral;
-import Triangle.AbstractSyntaxTrees.LetCommand;
-import Triangle.AbstractSyntaxTrees.LetExpression;
-import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
-import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
-import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
-import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
-import Triangle.AbstractSyntaxTrees.Operator;
-import Triangle.AbstractSyntaxTrees.ProcActualParameter;
-import Triangle.AbstractSyntaxTrees.ProcDeclaration;
-import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
-import Triangle.AbstractSyntaxTrees.ProcFuncsDeclaration;
-import Triangle.AbstractSyntaxTrees.Program;
-import Triangle.AbstractSyntaxTrees.RecordAggregate;
-import Triangle.AbstractSyntaxTrees.RecordExpression;
-import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
-import Triangle.AbstractSyntaxTrees.Repeat;
-import Triangle.AbstractSyntaxTrees.RepeatDo;
-import Triangle.AbstractSyntaxTrees.SequentialCommand;
-import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
-import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
-import Triangle.AbstractSyntaxTrees.SimpleVname;
-import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
-import Triangle.AbstractSyntaxTrees.SingleArrayAggregate;
-import Triangle.AbstractSyntaxTrees.SingleFieldTypeDenoter;
-import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.SingleRecordAggregate;
-import Triangle.AbstractSyntaxTrees.SubscriptVname;
-import Triangle.AbstractSyntaxTrees.TypeDeclaration;
-import Triangle.AbstractSyntaxTrees.TypeDenoter;
-import Triangle.AbstractSyntaxTrees.UnaryExpression;
-import Triangle.AbstractSyntaxTrees.VarActualParameter;
-import Triangle.AbstractSyntaxTrees.VarDeclaration;
-import Triangle.AbstractSyntaxTrees.VarFormalParameter;
-import Triangle.AbstractSyntaxTrees.Vname;
-import Triangle.AbstractSyntaxTrees.VnameExpression;
-import java.util.ArrayList;
-import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
-import Triangle.AbstractSyntaxTrees.FormalParameter;
-import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.FuncActualParameter;
-import Triangle.AbstractSyntaxTrees.FuncDeclaration;
-import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
-import Triangle.AbstractSyntaxTrees.Identifier;
-import Triangle.AbstractSyntaxTrees.IfCommand;
-import Triangle.AbstractSyntaxTrees.IfExpression;
-import Triangle.AbstractSyntaxTrees.IntegerExpression;
-import Triangle.AbstractSyntaxTrees.IntegerLiteral;
-import Triangle.AbstractSyntaxTrees.LetCommand;
-import Triangle.AbstractSyntaxTrees.LetExpression;
-import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
-import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
-import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
-import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
-import Triangle.AbstractSyntaxTrees.Operator;
-import Triangle.AbstractSyntaxTrees.ProcActualParameter;
-import Triangle.AbstractSyntaxTrees.ProcDeclaration;
-import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.Nothing;
 import Triangle.AbstractSyntaxTrees.ProcFunc;
-import Triangle.AbstractSyntaxTrees.Program;
-import Triangle.AbstractSyntaxTrees.RecordAggregate;
-import Triangle.AbstractSyntaxTrees.RecordExpression;
-import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
-import Triangle.AbstractSyntaxTrees.Repeat;
-import Triangle.AbstractSyntaxTrees.RepeatDo;
-import Triangle.AbstractSyntaxTrees.SequentialCommand;
-import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
-import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
-import Triangle.AbstractSyntaxTrees.SimpleVname;
-import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
-import Triangle.AbstractSyntaxTrees.SingleArrayAggregate;
-import Triangle.AbstractSyntaxTrees.SingleFieldTypeDenoter;
-import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.SingleRecordAggregate;
-import Triangle.AbstractSyntaxTrees.SubscriptVname;
-import Triangle.AbstractSyntaxTrees.TypeDeclaration;
-import Triangle.AbstractSyntaxTrees.TypeDenoter;
-import Triangle.AbstractSyntaxTrees.UnaryExpression;
-import Triangle.AbstractSyntaxTrees.VarActualParameter;
-import Triangle.AbstractSyntaxTrees.VarDeclaration;
-import Triangle.AbstractSyntaxTrees.VarFormalParameter;
-import Triangle.AbstractSyntaxTrees.Vname;
-import Triangle.AbstractSyntaxTrees.VnameExpression;
-import java.util.ArrayList;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
@@ -153,54 +60,7 @@ import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.Operator;
-import Triangle.AbstractSyntaxTrees.ProcActualParameter;
-import Triangle.AbstractSyntaxTrees.ProcDeclaration;
-import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
-import Triangle.AbstractSyntaxTrees.ProcFuncsDeclaration;
-import Triangle.AbstractSyntaxTrees.Program;
-import Triangle.AbstractSyntaxTrees.RecordAggregate;
-import Triangle.AbstractSyntaxTrees.RecordExpression;
-import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
-import Triangle.AbstractSyntaxTrees.Repeat;
-import Triangle.AbstractSyntaxTrees.RepeatDo;
-import Triangle.AbstractSyntaxTrees.SequentialCommand;
-import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
-import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
-import Triangle.AbstractSyntaxTrees.SimpleVname;
-import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
-import Triangle.AbstractSyntaxTrees.SingleArrayAggregate;
-import Triangle.AbstractSyntaxTrees.SingleFieldTypeDenoter;
-import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.SingleRecordAggregate;
-import Triangle.AbstractSyntaxTrees.SubscriptVname;
-import Triangle.AbstractSyntaxTrees.TypeDeclaration;
-import Triangle.AbstractSyntaxTrees.TypeDenoter;
-import Triangle.AbstractSyntaxTrees.UnaryExpression;
-import Triangle.AbstractSyntaxTrees.VarActualParameter;
-import Triangle.AbstractSyntaxTrees.VarDeclaration;
-import Triangle.AbstractSyntaxTrees.VarFormalParameter;
-import Triangle.AbstractSyntaxTrees.Vname;
-import Triangle.AbstractSyntaxTrees.VnameExpression;
-import java.util.ArrayList;
-import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
-import Triangle.AbstractSyntaxTrees.FormalParameter;
-import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.FuncActualParameter;
-import Triangle.AbstractSyntaxTrees.FuncDeclaration;
-import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
-import Triangle.AbstractSyntaxTrees.Identifier;
-import Triangle.AbstractSyntaxTrees.IfCommand;
-import Triangle.AbstractSyntaxTrees.IfExpression;
-import Triangle.AbstractSyntaxTrees.IntegerExpression;
-import Triangle.AbstractSyntaxTrees.IntegerLiteral;
-import Triangle.AbstractSyntaxTrees.LetCommand;
-import Triangle.AbstractSyntaxTrees.LetExpression;
-import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
-import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
-import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
-import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
-import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
-import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
@@ -228,7 +88,55 @@ import Triangle.AbstractSyntaxTrees.VarDeclaration;
 import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
-import java.util.ArrayList;
+import Triangle.AbstractSyntaxTrees.Nothing;
+import Triangle.AbstractSyntaxTrees.ProcFunc;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
+import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
+import Triangle.AbstractSyntaxTrees.FormalParameter;
+import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.FuncActualParameter;
+import Triangle.AbstractSyntaxTrees.FuncDeclaration;
+import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
+import Triangle.AbstractSyntaxTrees.Identifier;
+import Triangle.AbstractSyntaxTrees.IfCommand;
+import Triangle.AbstractSyntaxTrees.IfExpression;
+import Triangle.AbstractSyntaxTrees.IntegerExpression;
+import Triangle.AbstractSyntaxTrees.IntegerLiteral;
+import Triangle.AbstractSyntaxTrees.LetCommand;
+import Triangle.AbstractSyntaxTrees.LetExpression;
+import Triangle.AbstractSyntaxTrees.MultipleActualParameterSequence;
+import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
+import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
+import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.ProcActualParameter;
+import Triangle.AbstractSyntaxTrees.ProcDeclaration;
+import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.Program;
+import Triangle.AbstractSyntaxTrees.RecordAggregate;
+import Triangle.AbstractSyntaxTrees.RecordExpression;
+import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
+import Triangle.AbstractSyntaxTrees.Repeat;
+import Triangle.AbstractSyntaxTrees.RepeatDo;
+import Triangle.AbstractSyntaxTrees.SequentialCommand;
+import Triangle.AbstractSyntaxTrees.SequentialDeclaration;
+import Triangle.AbstractSyntaxTrees.SimpleTypeDenoter;
+import Triangle.AbstractSyntaxTrees.SimpleVname;
+import Triangle.AbstractSyntaxTrees.SingleActualParameterSequence;
+import Triangle.AbstractSyntaxTrees.SingleArrayAggregate;
+import Triangle.AbstractSyntaxTrees.SingleFieldTypeDenoter;
+import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
+import Triangle.AbstractSyntaxTrees.SingleRecordAggregate;
+import Triangle.AbstractSyntaxTrees.SubscriptVname;
+import Triangle.AbstractSyntaxTrees.TypeDeclaration;
+import Triangle.AbstractSyntaxTrees.TypeDenoter;
+import Triangle.AbstractSyntaxTrees.UnaryExpression;
+import Triangle.AbstractSyntaxTrees.VarActualParameter;
+import Triangle.AbstractSyntaxTrees.VarDeclaration;
+import Triangle.AbstractSyntaxTrees.VarFormalParameter;
+import Triangle.AbstractSyntaxTrees.Vname;
+import Triangle.AbstractSyntaxTrees.VnameExpression;
 
 public class Parser {
 
@@ -398,7 +306,6 @@ public class Parser {
 
   Command parseCommand() throws SyntaxError {
     Command commandAST = null; // in case there's a syntactic error
-System.out.println("Hola wenas");
     SourcePosition commandPos = new SourcePosition();
 
     start(commandPos);
@@ -441,13 +348,20 @@ System.out.println("Hola wenas");
       }
       break;
     
-
+      
     /*case Token.BEGIN:
       acceptIt();
       commandAST = parseCommand();
       accept(Token.END);
       break; */
-
+     
+    case Token.NOTHING:
+    {
+        acceptIt();
+        finish(commandPos);
+        commandAST = new Nothing(commandPos);
+        break;
+    }
     case Token.LET:
       {
         acceptIt();
@@ -472,6 +386,7 @@ System.out.println("Hola wenas");
         else{
             accept(Token.ELSE);
             c2AST = parseCommand();
+            accept(Token.END);
         }
         finish(commandPos);
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
@@ -488,20 +403,17 @@ System.out.println("Hola wenas");
             acceptIt();
             cAST = parseCommand();
             switch (currentToken.kind) {
-                case Token.WHILE:
+                case Token.WHILE -> {
                     acceptIt();
                     eAST = parseExpression();
-
-                    break;
-                case Token.UNTIL:
-
+                }
+                case Token.UNTIL -> {
                     acceptIt();
                     eAST = parseExpression();
                     isWhile = false;
-                    break;
+                }
 
-                default:
-                    syntacticError("Expected until or while",
+                default -> syntacticError("Expected until or while",
                           currentToken.spelling);
                 } 
             Command lAST = null;
@@ -514,17 +426,14 @@ System.out.println("Hola wenas");
             commandAST = new RepeatDo(cAST, eAST, lAST,isWhile, commandPos);
           
         }else{
-            if(Token.WHILE == currentToken.kind ){
-                acceptIt();
-              }
-            else if(Token.UNTIL == currentToken.kind)
-            {
-                acceptIt();
-                isWhile = false;
-            }
-            else{
-                syntacticError("Expected do until or while",
-                currentToken.spelling);
+            switch (currentToken.kind) {
+                case Token.WHILE -> acceptIt();
+                case Token.UNTIL -> {
+                    acceptIt();
+                    isWhile = false;
+                }
+                default -> syntacticError("Expected do until or while",
+                        currentToken.spelling);
             }
             eAST = parseExpression();
             accept(Token.DO);
@@ -635,6 +544,7 @@ System.out.println("Hola wenas");
         else{
             accept(Token.ELSE);
             c2AST = parseSingleCommand();
+            accept(Token.END);
         }
         finish(commandPos);
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
@@ -878,10 +788,10 @@ System.out.println("Hola wenas");
 
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
-    declarationAST = parseSingleDeclaration();
+    declarationAST = parseCompoundDeclaration();
     while (currentToken.kind == Token.SEMICOLON) {
       acceptIt();
-      Declaration d2AST = parseSingleDeclaration();
+      Declaration d2AST = parseCompoundDeclaration();
       finish(declarationPos);
       declarationAST = new SequentialDeclaration(declarationAST, d2AST,
         declarationPos);
@@ -898,9 +808,15 @@ System.out.println("Hola wenas");
     switch (currentToken.kind){
         case(Token.RECURSIVE):
             acceptIt();
-                ProcFuncsDeclaration pfAST = parseProcFuncs();
+                declarationAST = parseProcFuncs();
             break;
         case(Token.PRIVATE):
+            acceptIt();
+            Declaration dAST = parseDeclaration();
+            accept(Token.IN);
+            Declaration dAST2 = parseDeclaration();
+            accept(Token.END);
+            declarationAST = new PrivateDeclaration(dAST,dAST2, declarationPos);
             break;
         default:
             declarationAST = parseSingleDeclaration();
@@ -954,21 +870,28 @@ System.out.println("Hola wenas");
     return procFuncDeclaration;
   }
   
-  ProcFuncsDeclaration parseProcFuncs() throws SyntaxError{
-    ProcFuncsDeclaration pfcAST = null; // in case there's a syntactic error
+  RecursiveDeclaration parseProcFuncs() throws SyntaxError{
+    RecursiveDeclaration pfcAST = null; // in case there's a syntactic error
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
     ProcFunc pfAST1= parseProcFunc();
     accept(Token.AND);
-    ProcFunc pfAST2 = parseProcFunc();
-    pfcAST = new ProcFuncsDeclaration(pfAST1, pfAST2, declarationPos);
-    while(currentToken.kind == Token.AND){
-        ProcFunc pfAST = parseProcFunc();
-        pfcAST.addProcFunc(pfAST);
-    }
-      accept(Token.END);
-    
+    RecursiveDeclaration pfAST2 = parseRestOfPropFunc();
+    pfcAST = new RecursiveDeclaration(pfAST1, pfAST2, declarationPos);
     return pfcAST;
+  }
+  
+  RecursiveDeclaration parseRestOfPropFunc() throws SyntaxError{
+        RecursiveDeclaration pfcAST = null; // in case there's a syntactic error
+        RecursiveDeclaration pfAST2 = null;
+        SourcePosition declarationPos = new SourcePosition();
+        ProcFunc pfAST1= parseProcFunc();
+        if(currentToken.kind == Token.AND){
+            acceptIt();
+            pfAST2 = parseRestOfPropFunc();
+        }
+        pfcAST = new RecursiveDeclaration(pfAST1, pfAST2, declarationPos);
+        return pfcAST;
   }
 
   Declaration parseSingleDeclaration() throws SyntaxError {
@@ -1262,10 +1185,15 @@ System.out.println("Hola wenas");
       {
         acceptIt();
         IntegerLiteral ilAST = parseIntegerLiteral();
+        IntegerLiteral ilAST2 = null;
+        if(currentToken.kind == Token.DOUBLEDOT){
+            acceptIt();
+            ilAST2 = parseIntegerLiteral();
+        }
         accept(Token.OF);
         TypeDenoter tAST = parseTypeDenoter();
         finish(typePos);
-        typeAST = new ArrayTypeDenoter(ilAST, tAST, typePos);
+        typeAST = new ArrayTypeDenoter(ilAST,ilAST2, tAST, typePos);
       }
       break;
 

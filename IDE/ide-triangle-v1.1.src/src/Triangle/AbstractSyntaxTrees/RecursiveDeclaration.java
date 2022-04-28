@@ -5,21 +5,29 @@
 package Triangle.AbstractSyntaxTrees;
 
 import Triangle.SyntacticAnalyzer.SourcePosition;
+import java.util.ArrayList;
 
 /**
  *
  * @author lalem
  */
-public class Nothing extends Command{
+public class RecursiveDeclaration extends Declaration{
 
-    public Nothing(SourcePosition pos) {
+    public ProcFunc pfAST;
+    public RecursiveDeclaration pfcsAST;
+    
+    public RecursiveDeclaration(ProcFunc pfAST1,RecursiveDeclaration pfAST2, SourcePosition pos){
         super(pos);
+        this.pfAST =  pfAST1;
+        this.pfcsAST = pfAST2;
     }
-    
-    
-    @Override
+
+
     public Object visit(Visitor v, Object o) {
-        return v.visitNothing(this, o);
+        return v.visitRecursiveDeclaration(this, o);
     }
+    
+    
+
     
 }

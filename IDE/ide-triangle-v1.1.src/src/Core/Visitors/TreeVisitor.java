@@ -44,10 +44,14 @@ import Triangle.AbstractSyntaxTrees.MultipleArrayAggregate;
 import Triangle.AbstractSyntaxTrees.MultipleFieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.MultipleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.MultipleRecordAggregate;
+import Triangle.AbstractSyntaxTrees.Nothing;
 import Triangle.AbstractSyntaxTrees.Operator;
+import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcActualParameter;
 import Triangle.AbstractSyntaxTrees.ProcDeclaration;
 import Triangle.AbstractSyntaxTrees.ProcFormalParameter;
+import Triangle.AbstractSyntaxTrees.ProcFunc;
+import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
 import Triangle.AbstractSyntaxTrees.Program;
 import Triangle.AbstractSyntaxTrees.RecordExpression;
 import Triangle.AbstractSyntaxTrees.RecordTypeDenoter;
@@ -288,7 +292,10 @@ public class TreeVisitor implements Visitor {
     }
     
     public Object visitArrayTypeDenoter(ArrayTypeDenoter ast, Object obj) {
-        return(createBinary("Array Type Denoter", ast.IL, ast.T));
+        if(ast.ilAST2 == null){
+             return(createBinary("Array Type Denoter", ast.IL, ast.T));
+        }
+        return(createTernary("Array Type Denoter", ast.IL,ast.ilAST2, ast.T));
     }
     
     public Object visitBoolTypeDenoter(BoolTypeDenoter ast, Object obj) {
@@ -490,6 +497,35 @@ public class TreeVisitor implements Visitor {
     @Override
     public Object visitForCommandDef(ForCommandDefinition ast, Object o) {
         return createBinary("for def", ast.iAST, ast.esAST);
+    }
+
+    @Override
+    public Object visitNothing(Nothing ast, Object o) {
+        return createNullary("Nothing");
+    }
+
+    @Override
+    public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
+        if(ast.pfcsAST == null){
+            return createUnary("RecursiveDeclaration", ast.pfAST);
+        }
+        return createBinary("RecursiveDeclaration", ast.pfAST, ast.pfcsAST);
+    }
+
+    @Override
+    public Object visitProcFunc(ProcFunc ast, Object o) {
+        if(ast.fAST ==null ){
+            return createUnary("Proc-Func", ast.pAST);
+        }
+        else{
+            return createUnary("Proc-Func", ast.fAST);
+        }
+        
+    }
+
+    @Override
+    public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        return createBinary("Private Declaration", ast.dAST, ast.dAST2);
     }
 
  }
