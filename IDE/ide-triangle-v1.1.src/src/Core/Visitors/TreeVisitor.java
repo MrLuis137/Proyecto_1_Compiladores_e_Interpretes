@@ -34,6 +34,7 @@ import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
 import Triangle.AbstractSyntaxTrees.Identifier;
 import Triangle.AbstractSyntaxTrees.IfCommand;
 import Triangle.AbstractSyntaxTrees.IfExpression;
+import Triangle.AbstractSyntaxTrees.InitializedVarDeclaration;
 import Triangle.AbstractSyntaxTrees.IntTypeDenoter;
 import Triangle.AbstractSyntaxTrees.IntegerExpression;
 import Triangle.AbstractSyntaxTrees.IntegerLiteral;
@@ -496,7 +497,7 @@ public class TreeVisitor implements Visitor {
 
     @Override
     public Object visitForCommandDef(ForCommandDefinition ast, Object o) {
-        return createBinary("for def", ast.iAST, ast.esAST);
+        return createBinary("for definiton", ast.iAST, ast.esAST);
     }
 
     @Override
@@ -507,9 +508,9 @@ public class TreeVisitor implements Visitor {
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
         if(ast.pfcsAST == null){
-            return createUnary("RecursiveDeclaration", ast.pfAST);
+            return createUnary("Recursive Declaration", ast.pfAST);
         }
-        return createBinary("RecursiveDeclaration", ast.pfAST, ast.pfcsAST);
+        return createBinary("Recursive Declaration", ast.pfAST, ast.pfcsAST);
     }
 
     @Override
@@ -526,6 +527,11 @@ public class TreeVisitor implements Visitor {
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
         return createBinary("Private Declaration", ast.dAST, ast.dAST2);
+    }
+
+    @Override
+    public Object visitInitializedVarDeclaration(InitializedVarDeclaration ast, Object o) {
+       return createBinary("Initialized Var declaration", ast.I, ast.E);
     }
 
  }
