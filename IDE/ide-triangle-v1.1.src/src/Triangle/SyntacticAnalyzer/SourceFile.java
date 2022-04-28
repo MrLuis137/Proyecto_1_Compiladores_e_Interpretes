@@ -22,12 +22,14 @@ public class SourceFile {
   java.io.File sourceFile;
   java.io.FileInputStream source;
   int currentLine;
+  int currentCol;//a
 
   public SourceFile(String filename) {
     try {
       sourceFile = new java.io.File(filename);
       source = new java.io.FileInputStream(sourceFile);
       currentLine = 1;
+      currentCol = 0;
     }
     catch (java.io.IOException s) {
       sourceFile = null;
@@ -39,11 +41,12 @@ public class SourceFile {
   char getSource() {
     try {
       int c = source.read();
-
+      currentCol++;
       if (c == -1) {
         c = EOT;
       } else if (c == EOL) {
           currentLine++;
+          currentCol = 0;
       }
       return (char) c;
     }
@@ -54,5 +57,9 @@ public class SourceFile {
 
   int getCurrentLine() {
     return currentLine;
+  }
+  
+  int getCurrentColumn(){
+      return currentCol;
   }
 }

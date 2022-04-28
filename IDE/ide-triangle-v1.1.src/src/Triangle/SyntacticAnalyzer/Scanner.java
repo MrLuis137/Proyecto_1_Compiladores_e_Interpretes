@@ -203,11 +203,12 @@ public final class Scanner {
     currentlyScanningToken = true;
     currentSpelling = new StringBuffer("");
     pos = new SourcePosition();
-    pos.start = sourceFile.getCurrentLine();
+    int sCord[] = {sourceFile.getCurrentLine(), sourceFile.getCurrentColumn()};
+    pos.start = sCord;
 
     kind = scanToken();
-
-    pos.finish = sourceFile.getCurrentLine();
+    int fCord[] = {sourceFile.getCurrentLine(), sourceFile.getCurrentColumn()};
+    pos.finish = fCord;
     tok = new Token(kind, currentSpelling.toString(), pos);
     if (debug)
       System.out.println(tok);
