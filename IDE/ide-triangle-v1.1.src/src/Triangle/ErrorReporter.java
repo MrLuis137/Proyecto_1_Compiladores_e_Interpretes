@@ -32,7 +32,7 @@ public class ErrorReporter {
       System.out.print(tokenName);
     else
       System.out.print(message.charAt(p));
-    System.out.println(" " + pos.start + ".." + pos.finish);
+    System.out.println(" " +  pos.start[0]+','+pos.start[1]  + ".." + pos.finish[0]+','+ pos.finish[1]);
     numErrors++;
   }
 

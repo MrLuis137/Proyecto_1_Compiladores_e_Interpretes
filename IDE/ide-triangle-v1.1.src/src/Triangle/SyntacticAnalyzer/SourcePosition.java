@@ -16,19 +16,19 @@ package Triangle.SyntacticAnalyzer;
 
 public class SourcePosition {
 
-  public int start, finish;
+  public int start[], finish[];
 
   public SourcePosition () {
-    start = 0;
-    finish = 0;
+    start = new int[2];
+    finish = new int[2];
   }
 
-  public SourcePosition (int s, int f) {
+  public SourcePosition (int s[], int f[]) {
     start = s;
     finish = f;
   }
 
   public String toString() {
-    return "(" + start + ", " + finish + ")";
+    return "(" + start[0]+','+start[1] + ", " + finish[0]+','+ finish[1] + ")";
   }
 }

@@ -31,7 +31,7 @@ public class IDEReporter extends ErrorReporter {
      * @param pos Position in the source file.
      */
     public void reportError(String message, String tokenName, SourcePosition pos) {
-        errorPositions[numErrors] = pos.start;
+        errorPositions[numErrors] = pos.start[0];
         super.reportError(message, tokenName, pos);        
     }
     
