@@ -1,13 +1,1 @@
-let
-  var contador : Integer
-in
-contador := 0;
-repeat while contador < 3
-do
-b := 'r'
-end;
-repeat
-do
-a := a+1
-while contador < 3
-end
+nothing
