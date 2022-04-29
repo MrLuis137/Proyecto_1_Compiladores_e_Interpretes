@@ -2,13 +2,17 @@ package FileGenerators;
 
 
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;  
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Scanner;
 import org.jsoup.Jsoup;  
 import org.jsoup.nodes.Document;  
 import org.jsoup.nodes.Element;
@@ -28,14 +32,26 @@ public class HtmlGenerator {
         
         Path filePath = Path.of(path);
         String codigo = Files.readString(filePath);
+
+        
+        BufferedReader txtReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("template.html")));
+        
+        String template = "";
+        for (String line; (line = txtReader.readLine()) != null;) {
+            String newLine = line;
+            if (newLine.contains("<pre><code id=\"code\">")){
+                newLine = "<pre><code id=\"code\">" + codigo + "</code></pre>";
+            }else{
+                newLine = unEscapeString(newLine);
+            }
+                    
+            
+            template += newLine + "\n";
+        }
         
 
-        File input = new File("template.html"); //cargamos la plantilla
-        Document doc = Jsoup.parse(input, "UTF-8", ""); //lo parseamos para poderlo editar
-        Element code = doc.select("code").first(); //buscamos el elemento codigo
-        code.text(codigo); //colocamos el texto del codigo dentro del elemento
         
-        String html = doc.html(); //volvemos a convertir lo parseado y editado, en un archivo html
+        String html = template; //volvemos a convertir lo parseado y editado, en un archivo html
         
         writeHTML(html,path);
        
@@ -52,4 +68,17 @@ public class HtmlGenerator {
                            "HTML Generado!" +
                            "----------- ");
     }
+    
+    
+    public static String unEscapeString(String s){
+    StringBuilder sb = new StringBuilder();
+    for (int i=0; i<s.length(); i++)
+        switch (s.charAt(i)){
+            case '\n': sb.append("\\n"); break;
+            case '\t': sb.append("\\t"); break;
+            // ... rest of escape characters
+            default: sb.append(s.charAt(i));
+        }
+    return sb.toString();
+}
 }

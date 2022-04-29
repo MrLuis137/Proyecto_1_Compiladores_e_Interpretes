@@ -79,7 +79,7 @@ public class IDECompiler {
                 html.generateHTML(path);
             }
             catch(Exception e){
-                System.out.println("Error al general el HTML");
+                System.out.println("Error al general el HTML \n" + e);
             }
             System.out.println("Compilation was successful.");}
         else

@@ -1,8 +1,6 @@
-let
- private var j:Integer in 
-  proc usless() ~ 
-     j := a
-   end
- end
-in
-nothing
+repeat while
+1<1 
+do
+	nothing;
+	putint(1)
+end
