@@ -136,7 +136,7 @@ public class XmlGenerator {
             e = father;
         }
         else{
-            if (hasLeaf){
+            if (hasLeaf && leafName.equals("Nothing") == false ){
             e = newChildSP(father,name,leafName);  
             }
             else{
