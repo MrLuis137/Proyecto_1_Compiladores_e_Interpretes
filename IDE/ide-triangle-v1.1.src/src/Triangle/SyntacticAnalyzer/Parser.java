@@ -350,6 +350,7 @@ Identifier parseIdentifier() throws SyntaxError {
         accept(Token.IN);
         Command cAST = parseCommand();
         finish(commandPos);
+        accept(Token.END);
         commandAST = new LetCommand(dAST, cAST, commandPos);
       }
       break;
@@ -573,7 +574,6 @@ Expression parseExpression() throws SyntaxError {
         Declaration dAST = parseDeclaration();
         accept(Token.IN);
         Expression eAST = parseExpression();
-        accept(Token.END);
         finish(expressionPos);
         expressionAST = new LetExpression(dAST, eAST, expressionPos);
       }
