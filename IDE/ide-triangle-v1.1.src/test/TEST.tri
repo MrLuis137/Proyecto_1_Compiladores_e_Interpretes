@@ -1,1 +1,8 @@
-repeat do nothing while 1>1 
+let
+ private var j:Integer in 
+  proc usless() ~ 
+     j := a
+   end
+ end
+in
+nothing
