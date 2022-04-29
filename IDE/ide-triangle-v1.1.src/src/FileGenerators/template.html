@@ -191,7 +191,7 @@
             else{
                 //revisamos si la palabra se encuentra en las reservadas
                 //revisamos si la palabra se encuentra en las reservadas
-                var simbolosIgnorados = ["(", ")", ";", "[", "]"]
+                var simbolosIgnorados = ["(", ")", ";", "[", "]","\t", " "]
                 var tempWord = word
 
                 simbolosIgnorados.forEach(simbolo => {
@@ -200,6 +200,7 @@
 
                 
                 if (palabrasReservadas.includes(tempWord)) {
+
                     word = makeBold(word)
                 }
                 

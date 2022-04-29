@@ -32,6 +32,9 @@ public class HtmlGenerator {
         
         Path filePath = Path.of(path);
         String codigo = Files.readString(filePath);
+        
+        codigo = codigo.replaceAll("(?m)^[ \t]*\r?\n", "");
+        codigo = codigo.replace("\t","     ");
 
         
         BufferedReader txtReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("template.html")));
@@ -40,6 +43,7 @@ public class HtmlGenerator {
         for (String line; (line = txtReader.readLine()) != null;) {
             String newLine = line;
             if (newLine.contains("<pre><code id=\"code\">")){
+                System.out.println(codigo);
                 newLine = "<pre><code id=\"code\">" + codigo + "</code></pre>";
             }else{
                 newLine = unEscapeString(newLine);
