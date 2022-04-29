@@ -331,7 +331,11 @@ public class Parser {
       commandAST = parseCommand();
       accept(Token.END);
       break; */
-     
+     /*---------------------------------------------------------------
+    ****************************************************************
+    * Función Agregado el command Nothing
+    * Editores: Luis Diego AZ
+    ****************************************************************/ 
     case Token.NOTHING:
     {
         acceptIt();
@@ -357,6 +361,11 @@ public class Parser {
         accept(Token.THEN);
         Command c1AST = parseCommand();
         Command c2AST = null;
+         /*---------------------------------------------------------------
+        ****************************************************************
+        * Agregada la opción elsif
+        * Editores: Luis Diego AZ
+        ****************************************************************/
         if(currentToken.kind == Token.ELSIF){
             c2AST = parseRestOfIf();
         }
@@ -369,7 +378,12 @@ public class Parser {
         commandAST = new IfCommand(eAST, c1AST, c2AST, commandPos);
       }
       break;
-
+      
+       /*---------------------------------------------------------------
+    ****************************************************************
+    * Agregado el command Repeat
+    * Editores: Luis Diego AZ
+    ****************************************************************/
       case Token.REPEATE:
       {
         acceptIt();
@@ -426,6 +440,11 @@ public class Parser {
         }
         break;
     }
+    /*---------------------------------------------------------------
+    ****************************************************************
+    * Agregado el command For
+    * Editores: Luis Diego AZ
+    ****************************************************************/
     case Token.FOR:{
         Identifier iAST;
         Expression esAST;
@@ -505,7 +524,11 @@ public class Parser {
 
     return commandAST;
   }
-  
+   /*---------------------------------------------------------------
+    ****************************************************************
+    * Función auxiliar para el parseo elsif
+    * Editores: Luis Diego AZ
+    ****************************************************************/
   public Command parseRestOfIf() throws SyntaxError{
         Command commandAST = null;
         SourcePosition commandPos = new SourcePosition();
@@ -765,6 +788,11 @@ Expression parseExpression() throws SyntaxError {
 
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
+     /*---------------------------------------------------------------
+    ****************************************************************
+    * Se modificó para que pase primero al compound declaration.
+    * Editores: Tania Sanchez
+    ****************************************************************/
     declarationAST = parseCompoundDeclaration();
     while (currentToken.kind == Token.SEMICOLON) {
       acceptIt();
@@ -776,6 +804,11 @@ Expression parseExpression() throws SyntaxError {
     return declarationAST;
   }
   
+   /*---------------------------------------------------------------
+    ****************************************************************
+    * Agregado el compound declaration (Recursive y private declarations)
+    * Editores: Tania Sanchez
+    ****************************************************************/
   Declaration parseCompoundDeclaration( ) throws SyntaxError{
     Declaration declarationAST = null; // in case there's a syntactic error
     SourcePosition declarationPos = new SourcePosition();
@@ -802,6 +835,11 @@ Expression parseExpression() throws SyntaxError {
     return declarationAST;
   }
   
+   /*---------------------------------------------------------------
+    ****************************************************************
+    * Parseo de proc-func
+    * Editores: Tania Sanchez
+    ****************************************************************/
   ProcFunc parseProcFunc() throws SyntaxError{
     ProcFunc procFuncDeclaration = null;
     
@@ -847,25 +885,34 @@ Expression parseExpression() throws SyntaxError {
     return procFuncDeclaration;
   }
   
+   /*---------------------------------------------------------------
+    ****************************************************************
+    * Parseo de Proc-Funcs
+    * Editores: Tania Sanchez
+    ****************************************************************/
   RecursiveDeclaration parseProcFuncs() throws SyntaxError{
     RecursiveDeclaration pfcAST = null; // in case there's a syntactic error
     SourcePosition declarationPos = new SourcePosition();
     start(declarationPos);
     ProcFunc pfAST1= parseProcFunc();
     accept(Token.AND);
-    RecursiveDeclaration pfAST2 = parseRestOfPropFunc();
+    RecursiveDeclaration pfAST2 = parseRestOfPropFuncs();
     pfcAST = new RecursiveDeclaration(pfAST1, pfAST2, declarationPos);
     return pfcAST;
   }
-  
-  RecursiveDeclaration parseRestOfPropFunc() throws SyntaxError{
+  /*---------------------------------------------------------------
+****************************************************************
+* Función auxiliar para el parseo de los procfuncs
+* Editores: Tania Sanchez
+****************************************************************/
+  RecursiveDeclaration parseRestOfPropFuncs() throws SyntaxError{
         RecursiveDeclaration pfcAST = null; // in case there's a syntactic error
         RecursiveDeclaration pfAST2 = null;
         SourcePosition declarationPos = new SourcePosition();
         ProcFunc pfAST1= parseProcFunc();
         if(currentToken.kind == Token.AND){
             acceptIt();
-            pfAST2 = parseRestOfPropFunc();
+            pfAST2 = parseRestOfPropFuncs();
         }
         pfcAST = new RecursiveDeclaration(pfAST1, pfAST2, declarationPos);
         return pfcAST;
@@ -894,6 +941,11 @@ Expression parseExpression() throws SyntaxError {
         acceptIt();
         Identifier iAST = parseIdentifier();
         Expression eAST;
+        /*---------------------------------------------------------------
+        ****************************************************************
+        * Se agregó la alternativa para la variable inicializada
+        * Editores: Tania Sanchez
+        ****************************************************************/
         if(currentToken.kind == Token.BECOMES){
             acceptIt();
             eAST = parseExpression();
@@ -909,15 +961,36 @@ Expression parseExpression() throws SyntaxError {
       }
       break;
 
-    case Token.PROC:
+   case Token.PROC:
       {
-        declarationAST = parseProcFunc();
+        acceptIt();
+        Identifier iAST = parseIdentifier();
+        accept(Token.LPAREN);
+        FormalParameterSequence fpsAST = parseFormalParameterSequence();
+        accept(Token.RPAREN);
+        accept(Token.IS);
+        Command cAST = parseSingleCommand();
+        accept(Token.END);
+        finish(declarationPos);
+        ProcDeclaration proc = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
+        declarationAST = new ProcFunc(proc, declarationPos);
       }
       break;
 
     case Token.FUNC:
       {
-        declarationAST = parseProcFunc();
+        acceptIt();
+        Identifier iAST = parseIdentifier();
+        accept(Token.LPAREN);
+        FormalParameterSequence fpsAST = parseFormalParameterSequence();
+        accept(Token.RPAREN);
+        accept(Token.COLON);
+        TypeDenoter tAST = parseTypeDenoter();
+        accept(Token.IS);
+        Expression eAST = parseExpression();
+        finish(declarationPos);
+        FuncDeclaration func = new FuncDeclaration(iAST, fpsAST, tAST, eAST,declarationPos);
+        declarationAST = new ProcFunc(func, declarationPos);
       }
       break;
 
