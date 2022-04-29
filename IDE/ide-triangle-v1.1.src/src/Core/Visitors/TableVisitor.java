@@ -664,7 +664,7 @@ public Object visitForCommand(ForCommand ast, Object o) {
 
     @Override
     public Object visitNothing(Nothing ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
 
     @Override

@@ -107,7 +107,7 @@ public class XmlGenerator {
     
     private void traverseTree(DefaultMutableTreeNode tree, Element father){
        
-        if (tree.isLeaf()){
+        if (tree.isLeaf() && tree.toString().equals("Nothing") == false){
             return;
         }
 
@@ -131,7 +131,8 @@ public class XmlGenerator {
         name = name.replace(" ","");
         Element e;
         
-        if (tree.isRoot()){
+
+        if(tree.isRoot()){
             e = father;
         }
         else{
@@ -142,6 +143,8 @@ public class XmlGenerator {
                 e = newChildSP(father,name);
             }
         }
+            
+        
         
 
 
