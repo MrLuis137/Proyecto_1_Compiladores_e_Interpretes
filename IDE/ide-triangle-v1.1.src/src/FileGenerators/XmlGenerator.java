@@ -107,41 +107,48 @@ public class XmlGenerator {
     
     private void traverseTree(DefaultMutableTreeNode tree, Element father){
        
-    if (tree.isLeaf()){
-        return;
-    }
-        
-    
-    //para manejar las hojras del arbol(values)
-    Boolean hasLeaf = false;
-    String leafName = "";
-    
-    //iteramos por los hijos a ver si hay una hoja
-    Enumeration<TreeNode> children = tree.children();
-    while(children.hasMoreElements()){
-        TreeNode child = children.nextElement(); 
-        if(child.isLeaf()){
-            hasLeaf = true;
-            leafName = child.toString();
-            break;
+        if (tree.isLeaf()){
+            return;
         }
-    }
-    
-    String name = tree.toString();
-    name = name.replace(" ","");
-    Element e;
-    if (hasLeaf){
-        e = newChildSP(father,name,leafName);  
-    }
-    else{
-        e = newChildSP(father,name);
-    }
-    
 
-    children = tree.children();
-    while(children.hasMoreElements()){
-        traverseTree((DefaultMutableTreeNode) children.nextElement(), e);
-    }
+
+        //para manejar las hojras del arbol(values)
+        Boolean hasLeaf = false;
+        String leafName = "";
+
+        //iteramos por los hijos a ver si hay una hoja
+        Enumeration<TreeNode> children = tree.children();
+        while(children.hasMoreElements()){
+            TreeNode child = children.nextElement(); 
+            if(child.isLeaf()){
+                hasLeaf = true;
+                leafName = child.toString();
+                break;
+            }
+        }
+
+        String name = tree.toString();
+        name = name.replace(" ","");
+        Element e;
+        
+        if (tree.isRoot()){
+            e = father;
+        }
+        else{
+            if (hasLeaf){
+            e = newChildSP(father,name,leafName);  
+            }
+            else{
+                e = newChildSP(father,name);
+            }
+        }
+        
+
+
+        children = tree.children();
+        while(children.hasMoreElements()){
+            traverseTree((DefaultMutableTreeNode) children.nextElement(), e);
+        }
 
     
     }

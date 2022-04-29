@@ -117,7 +117,7 @@ public class Parser {
       previousTokenPosition = currentToken.position;
       currentToken = lexicalAnalyser.scan();
     } else {
-      lexicError("\"%\" expected here", Token.spell(tokenExpected));
+      syntacticError("\"%\" expected here", Token.spell(tokenExpected));
     }
   }
 
@@ -239,20 +239,20 @@ public class Parser {
 // parseIdentifier parses an identifier, and constructs a leaf AST to
 // represent it.
 
-  Identifier parseIdentifier() throws SyntaxError {
-    Identifier I = null;
+Identifier parseIdentifier() throws SyntaxError {
+  Identifier I = null;
 
-    if (currentToken.kind == Token.IDENTIFIER) {
-      previousTokenPosition = currentToken.position;
-      String spelling = currentToken.spelling;
-      I = new Identifier(spelling, previousTokenPosition);
-      currentToken = lexicalAnalyser.scan();
-    } else {
-      I = null;
-      syntacticError("identifier expected here", "");
-    }
-    return I;
+  if (currentToken.kind == Token.IDENTIFIER) {
+    previousTokenPosition = currentToken.position;
+    String spelling = currentToken.spelling;
+    I = new Identifier(spelling, previousTokenPosition);
+    currentToken = lexicalAnalyser.scan();
+  } else {
+    I = null;
+    syntacticError("identifier expected here", "");
   }
+  return I;
+}
 
 // parseOperator parses an operator, and constructs a leaf AST to
 // represent it.
@@ -499,7 +499,7 @@ public class Parser {
                 commandAST = new ForCommand(fdAST, efAST,ceAST, false, cAST,lAST,commandPos);
                 break;
             default:
-                syntacticError("No se esperaba el token actual", currentToken.spelling);
+                syntacticError("Expected do until or while", currentToken.spelling);
         }
         
         break;
