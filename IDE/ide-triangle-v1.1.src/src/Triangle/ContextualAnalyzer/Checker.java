@@ -960,12 +960,16 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitForCommand(ForCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ast.fdAST.visit(this, null);
+        return null;
     }
 
     @Override
     public Object visitForCommandDef(ForCommandDefinition ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        TypeDenoter eType = (TypeDenoter) ast.iAST.type;
+        if (! eType.equals(StdEnvironment.booleanType))
+        reporter.reportError("Boolean expression expected here", "", ast.iAST.position);
+        return null;
     }
 
     @Override
