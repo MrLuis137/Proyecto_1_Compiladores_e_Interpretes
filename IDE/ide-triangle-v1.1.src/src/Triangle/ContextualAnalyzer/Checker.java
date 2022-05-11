@@ -966,7 +966,7 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitForCommandDef(ForCommandDefinition ast, Object o) {
-        TypeDenoter eType = (TypeDenoter) ast.iAST.type;
+        TypeDenoter eType = (TypeDenoter) ast.esAST.visit(this, null);
         if (! eType.equals(StdEnvironment.booleanType))
         reporter.reportError("Boolean expression expected here", "", ast.iAST.position);
         return null;
