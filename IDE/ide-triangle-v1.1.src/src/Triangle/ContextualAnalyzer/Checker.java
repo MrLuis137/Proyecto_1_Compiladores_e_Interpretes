@@ -950,7 +950,14 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitRepeat(Repeat ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        TypeDenoter eType = (TypeDenoter)ast.eAST.visit(this, null);
+        if (! eType.equals(StdEnvironment.booleanType))
+            reporter.reportError("Boolean expression expected here", "", ast.eAST.position);
+        ast.cAST.visit(this, null);
+        if(ast.lAST != null){
+            ast.lAST.visit(this, null);
+        }
+        return null;
     }
 
     @Override

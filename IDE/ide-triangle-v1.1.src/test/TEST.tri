@@ -1,5 +1,6 @@
 let
-const i ~ 2
+var j := 's';
+var n := 4
 in
-i := 4
+repeat until 2=2 do  nothing;  j := n end
 end
