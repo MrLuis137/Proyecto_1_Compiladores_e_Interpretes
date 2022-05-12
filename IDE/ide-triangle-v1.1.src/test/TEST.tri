@@ -1,9 +1,5 @@
 let
-var i : Integer
+const i ~ 2
 in
-i := 0;
-for i from 2 .. 4
-do
-nothing
-end
+i := 4
 end

@@ -966,34 +966,36 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitForCommandDef(ForCommandDefinition ast, Object o) {
-        TypeDenoter eType = (TypeDenoter) ast.esAST.visit(this, null);
-        if (! eType.equals(StdEnvironment.booleanType))
-        reporter.reportError("Boolean expression expected here", "", ast.iAST.position);
+        ast.iAST.visit(this, null);
+        reporter.reportError("Boolean expression expected here", "", ast.esAST.position);
         return null;
     }
 
     @Override
     public Object visitNothing(Nothing ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
 
     @Override
     public Object visitProcFunc(ProcFunc ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
 
     @Override
     public Object visitInitializedVarDeclaration(InitializedVarDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        TypeDenoter type = (TypeDenoter)ast.E.visit(this, null);
+        Declaration decAST = new VarDeclaration(ast.I, type, dummyPos);
+        idTable.enter(ast.I.spelling, decAST);
+        return null;
     }
 }
