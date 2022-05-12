@@ -968,13 +968,30 @@ public final class Checker implements Visitor {
     @Override
     public Object visitForCommand(ForCommand ast, Object o) {
         ast.fdAST.visit(this, null);
+         TypeDenoter eType = (TypeDenoter)ast.eAST.visit(this, null);
+        if (! eType.equals(StdEnvironment.integerType))
+            reporter.reportError("Integer expression expected here", "", ast.eAST.position);
+        int exp1 = Integer.parseInt(((IntegerExpression)ast.fdAST.esAST).IL.spelling);
+        int exp2 = Integer.parseInt(((IntegerExpression)ast.eAST).IL.spelling);
+        if(exp1 >= exp2 ){
+            reporter.reportError("Expression 2 must be bigger than Expression 1",
+                    ((IntegerExpression)ast.fdAST.esAST).IL.spelling, ast.eAST.position);
+        }
+        if(ast.ceAST != null){
+            eType = (TypeDenoter)ast.ceAST.visit(this, null);
+            if (! eType.equals(StdEnvironment.booleanType))
+            reporter.reportError("Boolean expression expected here", "", ast.ceAST.position);
+        }
         return null;
     }
 
     @Override
     public Object visitForCommandDef(ForCommandDefinition ast, Object o) {
-        ast.iAST.visit(this, null);
-        reporter.reportError("Boolean expression expected here", "", ast.esAST.position);
+        TypeDenoter eType = (TypeDenoter)ast.esAST.visit(this, null);
+        if (! eType.equals(StdEnvironment.integerType))
+            reporter.reportError("Integer expected here", "", ast.esAST.position);
+        Declaration dec = new ConstDeclaration(ast.iAST, ast.esAST, dummyPos);
+        idTable.enter(ast.iAST.spelling, dec);
         return null;
     }
 
@@ -985,16 +1002,30 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
+        RecursiveDeclaration temp = ast;
+        while(temp != null){
+            temp.pfAST.visit(this, null);
+            temp = temp.pfcsAST;
+        }
+        //FALTA
         return null;
     }
 
     @Override
     public Object visitProcFunc(ProcFunc ast, Object o) {
+        if(ast.fAST != null){
+            ast.fAST.visit(this, null);
+        }
+        else{
+            ast.pAST.visit(this, null);
+        }
         return null;
     }
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        //Cuestiones de el declaration :,c
+        //idTable.enter(id, ast);
         return null;
     }
 
