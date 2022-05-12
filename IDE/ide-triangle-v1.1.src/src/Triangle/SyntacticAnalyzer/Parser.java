@@ -819,7 +819,8 @@ Expression parseExpression() throws SyntaxError {
     switch (currentToken.kind){
         case(Token.RECURSIVE):
             acceptIt();
-                declarationAST = parseProcFuncs();
+            declarationAST = parseProcFuncs();
+            accept(Token.END);
             break;
         case(Token.PRIVATE):
             acceptIt();

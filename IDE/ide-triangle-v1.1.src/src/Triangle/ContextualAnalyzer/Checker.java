@@ -1014,10 +1014,19 @@ public final class Checker implements Visitor {
     @Override
     public Object visitProcFunc(ProcFunc ast, Object o) {
         if(ast.fAST != null){
-            ast.fAST.visit(this, null);
+            FuncDeclaration func = ast.fAST;
+            func.T = (TypeDenoter) func.T.visit(this, null);
+            idTable.enter (func.I.spelling, ast); // permits recursion
+            if (ast.duplicated)
+              reporter.reportError ("identifier \"%\" already declared",
+                            func.I.spelling, ast.position);
         }
         else{
-            ast.pAST.visit(this, null);
+            ProcDeclaration proc = ast.pAST;
+            idTable.enter (proc.I.spelling, ast); // permits recursion
+            if (ast.duplicated)
+              reporter.reportError ("identifier \"%\" already declared",
+                                    proc.I.spelling, proc.position);
         }
         return null;
     }
