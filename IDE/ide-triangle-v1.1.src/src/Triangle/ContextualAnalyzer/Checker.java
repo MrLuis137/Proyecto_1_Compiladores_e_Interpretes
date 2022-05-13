@@ -967,10 +967,10 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitForCommand(ForCommand ast, Object o) {
-        ast.fdAST.visit(this, null);
-         TypeDenoter eType = (TypeDenoter)ast.eAST.visit(this, null);
+        TypeDenoter eType = (TypeDenoter)ast.eAST.visit(this, null);
         if (! eType.equals(StdEnvironment.integerType))
             reporter.reportError("Integer expression expected here", "", ast.eAST.position);
+        ast.fdAST.visit(this, null);   
         int exp1 = Integer.parseInt(((IntegerExpression)ast.fdAST.esAST).IL.spelling);
         int exp2 = Integer.parseInt(((IntegerExpression)ast.eAST).IL.spelling);
         if(exp1 >= exp2 ){
@@ -982,6 +982,11 @@ public final class Checker implements Visitor {
             if (! eType.equals(StdEnvironment.booleanType))
             reporter.reportError("Boolean expression expected here", "", ast.ceAST.position);
         }
+        ast.cAST.visit(this,null );
+        if(ast.lAST != null){
+            ast.lAST.visit(this, null); 
+        }
+        idTable.closeScope();  
         return null;
     }
 
@@ -991,6 +996,7 @@ public final class Checker implements Visitor {
         if (! eType.equals(StdEnvironment.integerType))
             reporter.reportError("Integer expected here", "", ast.esAST.position);
         Declaration dec = new ConstDeclaration(ast.iAST, ast.esAST, dummyPos);
+        idTable.openScope();
         idTable.enter(ast.iAST.spelling, dec);
         return null;
     }
