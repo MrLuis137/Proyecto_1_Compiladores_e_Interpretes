@@ -1,13 +1,20 @@
-for i from 1 .. 6
- until i < 5 
- do
- let
- var i := 6
- in
- i := 2
- end; 
- putint(i);
- puteol()
- leave 
- putint(i)
-end;
+let
+    private
+        var a := 5;
+        private
+    
+            private
+                var k := 0
+            in
+                var l :=3
+             end
+        in
+            var o := l;
+            var b := 15
+        end
+    in
+        var c := a * b * 2
+    end
+in
+  putint(c)
+end

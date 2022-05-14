@@ -14,7 +14,7 @@ import Triangle.SyntacticAnalyzer.SourcePosition;
 public class RepeatDo extends Command{
     public Expression eAST;
     public Command cAST;
-    Command lAST;
+    public Command lAST;// agregado public progra 2
     public boolean isWhile;
     
     public RepeatDo ( Command cAST, Expression eAST, Command lAST,Boolean isWhile, SourcePosition thePosition){

@@ -15,12 +15,12 @@ public class ForCommand extends Command {
     public Expression eAST;
     public Command cAST;
     public Command lAST; 
-    public ForCommandDefinition fdAST;
+    public ForVarDeclaration fdAST;
     public Expression ceAST;
     public boolean isWhile;
      
     //For sin condicion
-    public ForCommand(ForCommandDefinition fdAST, Expression eAST, Command cAST, Command lAST, SourcePosition pos) {
+    public ForCommand(ForVarDeclaration fdAST, Expression eAST, Command cAST, Command lAST, SourcePosition pos) {
         super(pos);
         this.eAST = eAST;
         this.cAST = cAST;
@@ -28,7 +28,7 @@ public class ForCommand extends Command {
         this.fdAST = fdAST;
     }
     //For con condicion
-    public ForCommand(ForCommandDefinition fdAST, Expression eAST,Expression ceAST, boolean isWhile, Command cAST, Command lAST, SourcePosition pos) {
+    public ForCommand(ForVarDeclaration fdAST, Expression eAST,Expression ceAST, boolean isWhile, Command cAST, Command lAST, SourcePosition pos) {
         super(pos);
         this.eAST = eAST;
         this.cAST = cAST;

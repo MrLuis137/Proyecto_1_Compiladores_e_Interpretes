@@ -27,7 +27,7 @@ import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ForCommand;
-import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
+import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -496,8 +496,8 @@ public class TreeVisitor implements Visitor {
     }
 
     @Override
-    public Object visitForCommandDef(ForCommandDefinition ast, Object o) {
-        return createBinary("for definiton", ast.iAST, ast.esAST);
+    public Object visitForCommandDef(ForVarDeclaration ast, Object o) {
+        return createBinary("for var Declaration", ast.iAST, ast.esAST);
     }
 
     @Override

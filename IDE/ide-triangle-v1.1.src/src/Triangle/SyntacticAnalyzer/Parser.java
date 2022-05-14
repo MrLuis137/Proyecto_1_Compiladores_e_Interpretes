@@ -44,7 +44,7 @@ import Triangle.AbstractSyntaxTrees.PrivateDeclaration;
 import Triangle.AbstractSyntaxTrees.Nothing;
 import Triangle.AbstractSyntaxTrees.ProcFunc;
 import Triangle.AbstractSyntaxTrees.RecursiveDeclaration;
-import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
+import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
@@ -455,7 +455,7 @@ Identifier parseIdentifier() throws SyntaxError {
         iAST = parseIdentifier();
         accept(Token.FROM);
         esAST = parseExpression();
-        ForCommandDefinition fdAST = new ForCommandDefinition(iAST, esAST, commandPos);
+        ForVarDeclaration fdAST = new ForVarDeclaration(iAST, esAST, commandPos);
         accept(Token.DOUBLEDOT);
         efAST = parseExpression();
         switch(currentToken.kind){
@@ -975,7 +975,7 @@ Expression parseExpression() throws SyntaxError {
         accept(Token.END);
         finish(declarationPos);
         ProcDeclaration proc = new ProcDeclaration(iAST, fpsAST, cAST, declarationPos);
-        declarationAST = new ProcFunc(proc, declarationPos);
+        declarationAST = proc;//CAMBIADO PARA LA PROGRA II
       }
       break;
 
@@ -992,7 +992,7 @@ Expression parseExpression() throws SyntaxError {
         Expression eAST = parseExpression();
         finish(declarationPos);
         FuncDeclaration func = new FuncDeclaration(iAST, fpsAST, tAST, eAST,declarationPos);
-        declarationAST = new ProcFunc(func, declarationPos);
+        declarationAST = func;//CAMBIADO PARA LA PROGRA II
       }
       break;
 

@@ -15,11 +15,17 @@
 package Triangle.ContextualAnalyzer;
 
 import Triangle.AbstractSyntaxTrees.Declaration;
+import java.util.Stack;
 
 public final class IdentificationTable {
 
   private int level;
   private IdEntry latest;
+  //AGREGADO
+  private Stack<IdEntry[]> privateStack = new Stack<IdEntry[]>();
+  private boolean waitingDeclaration = false;
+  //AGREGADO
+  
 
   public IdentificationTable () {
     level = 0;
@@ -50,7 +56,31 @@ public final class IdentificationTable {
     this.level--;
     this.latest = entry;
   }
-
+  //AGREGADO
+   public void openPrivate(){
+       /* idEntry[0] = elemento antes de la declaración private
+        idEntry[1] = primer elemento angregado a la tabla luego del "in" el la
+       declaración private*/
+       IdEntry[] temp = {latest,null};
+       privateStack.add(temp);
+   }
+   
+   public void waitDeclaration(){ waitingDeclaration = true;}
+   
+   public void setPrivatePointer(IdEntry entry){
+       privateStack.peek()[1]= entry;
+       waitingDeclaration = false;
+   }
+   
+   public void closePrivate(){
+       if(!privateStack.empty()){
+           IdEntry[] temp = privateStack.pop();
+           temp[1].previous = temp[0];
+       }
+   }
+  //AGREGADO
+  
+  
   // Makes a new entry in the identification table for the given identifier
   // and attribute. The new entry belongs to the current level.
   // duplicated is set to to true iff there is already an entry for the
@@ -75,6 +105,9 @@ public final class IdentificationTable {
     attr.duplicated = present;
     // Add new entry ...
     entry = new IdEntry(id, attr, this.level, this.latest);
+    if(waitingDeclaration){
+        setPrivatePointer(entry);
+    }
     this.latest = entry;
   }
 

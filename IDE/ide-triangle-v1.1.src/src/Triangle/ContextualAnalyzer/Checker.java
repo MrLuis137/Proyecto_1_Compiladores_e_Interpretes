@@ -40,7 +40,7 @@ import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.FieldTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ForCommand;
-import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
+import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
 import Triangle.AbstractSyntaxTrees.FormalParameter;
 import Triangle.AbstractSyntaxTrees.FormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
@@ -471,13 +471,16 @@ public final class Checker implements Visitor {
   public Object visitConstActualParameter(ConstActualParameter ast, Object o) {
     FormalParameter fp = (FormalParameter) o;
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-
+    //System.out.println(eType.toString());
+    //System.out.println(((ConstFormalParameter) fp).T);
     if (! (fp instanceof ConstFormalParameter))
       reporter.reportError ("const actual parameter not expected here", "",
                             ast.position);
+    
     else if (! eType.equals(((ConstFormalParameter) fp).T))
       reporter.reportError ("wrong type for const actual parameter", "",
                             ast.E.position);
+        
     return null;
   }
 
@@ -722,7 +725,10 @@ public final class Checker implements Visitor {
         ast.variable = false;
       } else if (binding instanceof VarFormalParameter) {
         ast.type = ((VarFormalParameter) binding).T;
-        ast.variable = true;
+        ast.variable = true; 
+      }
+      else if(binding instanceof ForVarDeclaration){
+          ast.variable = false;
       } else
         reporter.reportError ("\"%\" is not a const or var identifier",
                               ast.I.spelling, ast.I.position);
@@ -962,7 +968,14 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitRepeatDo(RepeatDo ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        TypeDenoter eType = (TypeDenoter)ast.eAST.visit(this, null);
+        if (! eType.equals(StdEnvironment.booleanType))
+            reporter.reportError("Boolean expression expected here", "", ast.eAST.position);
+        ast.cAST.visit(this, null);
+        if(ast.lAST != null){
+            ast.lAST.visit(this, null);
+        }
+        return null;
     }
 
     @Override
@@ -971,17 +984,20 @@ public final class Checker implements Visitor {
         if (! eType.equals(StdEnvironment.integerType))
             reporter.reportError("Integer expression expected here", "", ast.eAST.position);
         ast.fdAST.visit(this, null);   
-        int exp1 = Integer.parseInt(((IntegerExpression)ast.fdAST.esAST).IL.spelling);
-        int exp2 = Integer.parseInt(((IntegerExpression)ast.eAST).IL.spelling);
-        if(exp1 >= exp2 ){
-            reporter.reportError("Expression 2 must be bigger than Expression 1",
-                    ((IntegerExpression)ast.fdAST.esAST).IL.spelling, ast.eAST.position);
-        }
         if(ast.ceAST != null){
             eType = (TypeDenoter)ast.ceAST.visit(this, null);
             if (! eType.equals(StdEnvironment.booleanType))
             reporter.reportError("Boolean expression expected here", "", ast.ceAST.position);
         }
+        idTable.openScope();
+        idTable.enter(ast.fdAST.iAST.spelling, ast.fdAST);
+        /*int exp1 = Integer.parseInt(((IntegerExpression)ast.fdAST.esAST).IL.spelling);
+        int exp2 = Integer.parseInt(((IntegerExpression)ast.eAST).IL.spelling);
+        if(exp1 >= exp2 ){
+            reporter.reportError("Expression 2 must be bigger than Expression 1",
+                    ((IntegerExpression)ast.fdAST.esAST).IL.spelling, ast.eAST.position);
+        }*/
+      
         ast.cAST.visit(this,null );
         if(ast.lAST != null){
             ast.lAST.visit(this, null); 
@@ -991,13 +1007,10 @@ public final class Checker implements Visitor {
     }
 
     @Override
-    public Object visitForCommandDef(ForCommandDefinition ast, Object o) {
+    public Object visitForCommandDef(ForVarDeclaration ast, Object o) {
         TypeDenoter eType = (TypeDenoter)ast.esAST.visit(this, null);
         if (! eType.equals(StdEnvironment.integerType))
             reporter.reportError("Integer expected here", "", ast.esAST.position);
-        Declaration dec = new ConstDeclaration(ast.iAST, ast.esAST, dummyPos);
-        idTable.openScope();
-        idTable.enter(ast.iAST.spelling, dec);
         return null;
     }
 
@@ -1008,37 +1021,90 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
-        RecursiveDeclaration temp = ast;
-        while(temp != null){
-            temp.pfAST.visit(this, null);
-            temp = temp.pfcsAST;
+       /* declareProcFunc(ast.pfAST);
+        if(ast.pfcsAST != null){
+            ast.pfcsAST.visit(this, null);
         }
+        ast.pfAST.visit(this, null);
+        */
+         RecursiveDeclaration temp = ast;
+         while(temp != null){
+             declareProcFunc(temp.pfAST);
+             temp = temp.pfcsAST;
+         }
+         temp = ast;
+         System.out.println(temp);
+         while(temp != null){
+             System.out.println(temp);
+             temp.pfAST.visit(this, null);
+             temp = temp.pfcsAST;
+         }
+         System.out.println(temp);
+        
         //FALTA
         return null;
     }
 
-    @Override
-    public Object visitProcFunc(ProcFunc ast, Object o) {
+    public void declareProcFunc(ProcFunc ast){
         if(ast.fAST != null){
             FuncDeclaration func = ast.fAST;
-            func.T = (TypeDenoter) func.T.visit(this, null);
-            idTable.enter (func.I.spelling, ast); // permits recursion
+            func.T = (TypeDenoter) func.T.visit(this, null);           
+            idTable.enter (func.I.spelling, func); // permits recursion
             if (ast.duplicated)
               reporter.reportError ("identifier \"%\" already declared",
                             func.I.spelling, ast.position);
         }
         else{
             ProcDeclaration proc = ast.pAST;
-            idTable.enter (proc.I.spelling, ast); // permits recursion
+            System.out.println(proc.I.spelling);
+            idTable.enter (proc.I.spelling, proc); // permits recursion
             if (ast.duplicated)
               reporter.reportError ("identifier \"%\" already declared",
                                     proc.I.spelling, proc.position);
         }
+    }
+    
+    @Override
+    public Object visitProcFunc(ProcFunc ast, Object o) {
+        if(ast.fAST != null){
+            FuncDeclaration func = ast.fAST;
+            func.T = (TypeDenoter) func.T.visit(this, null);
+            idTable.openScope();
+            func.FPS.visit(this, null);
+            TypeDenoter eType = (TypeDenoter) func.E.visit(this, null);
+            idTable.closeScope();
+            if (! func.T.equals(eType))
+              reporter.reportError ("body of function \"%\" has wrong type",
+                                    func.I.spelling, func.E.position);
+        }
+        else{
+            ProcDeclaration proc = ast.pAST;
+            /*idTable.enter (proc.I.spelling, proc); // permits recursion
+            if (ast.duplicated)
+              reporter.reportError ("identifier \"%\" already declared",
+                                    proc.I.spelling, proc.position);*/
+            idTable.openScope();
+            proc.FPS.visit(this, null);
+            proc.C.visit(this, null);
+            idTable.closeScope();
+        }
         return null;
     }
+    
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
+        idTable.openPrivate();
+        if(!(ast.dAST instanceof Declaration)){
+             reporter.reportRestriction("Can't be a single or compound declaration");
+        }
+        if(!(ast.dAST2 instanceof Declaration)){
+             reporter.reportRestriction("Can't be a single or compound declaration");
+        }
+        ast.dAST.visit(this,null);
+        idTable.waitDeclaration();
+        ast.dAST2.visit(this, null);
+        idTable.closePrivate();
         //Cuestiones de el declaration :,c
         //idTable.enter(id, ast);
         return null;

@@ -27,7 +27,7 @@ import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
 import Triangle.AbstractSyntaxTrees.ForCommand;
-import Triangle.AbstractSyntaxTrees.ForCommandDefinition;
+import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
 import Triangle.AbstractSyntaxTrees.FuncDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncFormalParameter;
@@ -121,7 +121,7 @@ public class TableVisitor implements Visitor {
   }
   
 //Agregado
-public Object visitForCommandDef(ForCommandDefinition ast, Object o){
+public Object visitForCommandDef(ForVarDeclaration ast, Object o){
     ast.iAST.visit(this, o);
     ast.esAST.visit(this, o);
     return null;

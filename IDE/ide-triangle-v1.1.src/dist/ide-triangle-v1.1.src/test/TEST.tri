@@ -1,9 +1,0 @@
-let
- private var j:Integer in 
-  proc usless() ~ 
-     j := a
-   end
- end
-in
-nothing
-end
