@@ -726,8 +726,13 @@ public final class Checker implements Visitor {
         ast.variable = true; 
       }
       else if(binding instanceof ForVarDeclaration){
+          ast.type = StdEnvironment.integerType;
           ast.variable = false;
+      }else if(binding instanceof InitializedVarDeclaration){
+          ast.type = ((InitializedVarDeclaration) binding).E.type;
+          ast.variable = true;
       } else
+          
         reporter.reportError ("\"%\" is not a const or var identifier",
                               ast.I.spelling, ast.I.position);
     return ast.type;
@@ -1019,12 +1024,7 @@ public final class Checker implements Visitor {
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
-       /* declareProcFunc(ast.pfAST);
-        if(ast.pfcsAST != null){
-            ast.pfcsAST.visit(this, null);
-        }
-        ast.pfAST.visit(this, null);
-        */
+      
          RecursiveDeclaration temp = ast;
          while(temp != null){
              declareProcFunc(temp.pfAST);
@@ -1045,17 +1045,18 @@ public final class Checker implements Visitor {
             FuncDeclaration func = ast.fAST;
             func.T = (TypeDenoter) func.T.visit(this, null);           
             idTable.enter (func.I.spelling, func); // permits recursion
-            if (ast.duplicated)
+            if (func.duplicated)
               reporter.reportError ("identifier \"%\" already declared",
-                            func.I.spelling, ast.position);
+                            func.I.spelling, func.position);
             idTable.openScope();
             func.FPS.visit(this,null);
             idTable.closeScope();
         }
         else{
             ProcDeclaration proc = ast.pAST;
+            
             idTable.enter (proc.I.spelling, proc);
-            if (ast.duplicated)
+            if (proc.duplicated)
               reporter.reportError ("identifier \"%\" already declared",
                                     proc.I.spelling, proc.position);
             idTable.openScope();
@@ -1110,8 +1111,12 @@ public final class Checker implements Visitor {
     @Override
     public Object visitInitializedVarDeclaration(InitializedVarDeclaration ast, Object o) {
         TypeDenoter type = (TypeDenoter)ast.E.visit(this, null);
-        Declaration decAST = new VarDeclaration(ast.I, type, dummyPos);
-        idTable.enter(ast.I.spelling, decAST);
+        //Declaration decAST = new VarDeclaration(ast.I, type, dummyPos);
+        idTable.enter(ast.I.spelling, ast);
+        if(ast.duplicated){
+            reporter.reportError ("identifier \"%\" already declared",
+                              ast.I.spelling, ast.position);
+        }
         return null;
     }
 }
