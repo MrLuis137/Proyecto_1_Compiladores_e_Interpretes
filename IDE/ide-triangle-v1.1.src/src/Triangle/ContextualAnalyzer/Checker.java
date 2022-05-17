@@ -471,8 +471,6 @@ public final class Checker implements Visitor {
   public Object visitConstActualParameter(ConstActualParameter ast, Object o) {
     FormalParameter fp = (FormalParameter) o;
     TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-    //System.out.println(eType.toString());
-    //System.out.println(((ConstFormalParameter) fp).T);
     if (! (fp instanceof ConstFormalParameter))
       reporter.reportError ("const actual parameter not expected here", "",
                             ast.position);
@@ -1033,13 +1031,10 @@ public final class Checker implements Visitor {
              temp = temp.pfcsAST;
          }
          temp = ast;
-         System.out.println(temp);
          while(temp != null){
-             System.out.println(temp);
              temp.pfAST.visit(this, null);
              temp = temp.pfcsAST;
          }
-         System.out.println(temp);
         
         //FALTA
         return null;
@@ -1053,14 +1048,20 @@ public final class Checker implements Visitor {
             if (ast.duplicated)
               reporter.reportError ("identifier \"%\" already declared",
                             func.I.spelling, ast.position);
+            idTable.openScope();
+            func.FPS.visit(this,null);
+            idTable.closeScope();
         }
         else{
             ProcDeclaration proc = ast.pAST;
-            System.out.println(proc.I.spelling);
-            idTable.enter (proc.I.spelling, proc); // permits recursion
+            idTable.enter (proc.I.spelling, proc);
             if (ast.duplicated)
               reporter.reportError ("identifier \"%\" already declared",
                                     proc.I.spelling, proc.position);
+            idTable.openScope();
+            proc.FPS.visit(this, null);// permits recursion
+            idTable.closeScope();
+            
         }
     }
     
@@ -1079,10 +1080,6 @@ public final class Checker implements Visitor {
         }
         else{
             ProcDeclaration proc = ast.pAST;
-            /*idTable.enter (proc.I.spelling, proc); // permits recursion
-            if (ast.duplicated)
-              reporter.reportError ("identifier \"%\" already declared",
-                                    proc.I.spelling, proc.position);*/
             idTable.openScope();
             proc.FPS.visit(this, null);
             proc.C.visit(this, null);

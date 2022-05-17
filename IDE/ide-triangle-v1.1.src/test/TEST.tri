@@ -1,20 +1,16 @@
 let
-    private
-        var a := 5;
-        private
-    
-            private
-                var k := 0
-            in
-                var l :=3
-             end
-        in
-            var o := l;
-            var b := 15
-        end
-    in
-        var c := a * b * 2
+  recursive
+    func doble(var i : Integer) : Integer ~
+      i+3 ! sintácticamente bien, contextualmente mal
+    and
+    proc triplicar(var i : Integer) ~
+      i := i + doble(i)
     end
+    and
+    proc duplicar(var i : Integer) ~
+      i := doble(i)
+    end
+  end
 in
-  putint(c)
+  nothing 
 end
