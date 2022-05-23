@@ -171,8 +171,7 @@ public final class Checker implements Visitor {
     TypeDenoter elemType = (TypeDenoter) ast.AA.visit(this, null);
     IntegerLiteral il = new IntegerLiteral(new Integer(ast.AA.elemCount).toString(),
                                            ast.position);
-    //COMENTADO PARA EVITAR PROBLEMAS, REQUERIRÁ FUTURA ATENCIÓN
-    //ast.type = new ArrayTypeDenoter(il, elemType, ast.position);
+    ast.type = new ArrayTypeDenoter(il, elemType, ast.position);
     return ast.type;
   }
 
@@ -598,8 +597,11 @@ public final class Checker implements Visitor {
     ast.T = (TypeDenoter) ast.T.visit(this, null);
     if ((Integer.valueOf(ast.IL.spelling).intValue()) == 0)
       reporter.reportError ("arrays must not be empty", "", ast.IL.position);
+    if(ast.ilAST2 != null && Integer.parseInt(ast.IL.spelling) > Integer.parseInt(ast.ilAST2.spelling)){
+        reporter.reportError ("The lower bound is greater than the upper bound", "", ast.IL.position);
+    }
     return ast;
-  }
+ }
 
   public Object visitBoolTypeDenoter(BoolTypeDenoter ast, Object o) {
     return StdEnvironment.booleanType;
@@ -987,11 +989,6 @@ public final class Checker implements Visitor {
         if (! eType.equals(StdEnvironment.integerType))
             reporter.reportError("Integer expression expected here", "", ast.eAST.position);
         ast.fdAST.visit(this, null);   
-        if(ast.ceAST != null){
-            eType = (TypeDenoter)ast.ceAST.visit(this, null);
-            if (! eType.equals(StdEnvironment.booleanType))
-            reporter.reportError("Boolean expression expected here", "", ast.ceAST.position);
-        }
         idTable.openScope();
         idTable.enter(ast.fdAST.iAST.spelling, ast.fdAST);
         /*int exp1 = Integer.parseInt(((IntegerExpression)ast.fdAST.esAST).IL.spelling);
@@ -1000,7 +997,11 @@ public final class Checker implements Visitor {
             reporter.reportError("Expression 2 must be bigger than Expression 1",
                     ((IntegerExpression)ast.fdAST.esAST).IL.spelling, ast.eAST.position);
         }*/
-      
+        if(ast.ceAST != null){
+            eType = (TypeDenoter)ast.ceAST.visit(this, null);
+            if (! eType.equals(StdEnvironment.booleanType))
+                reporter.reportError("Boolean expression expected here", "", ast.eAST.position);
+        }
         ast.cAST.visit(this,null );
         if(ast.lAST != null){
             ast.lAST.visit(this, null); 

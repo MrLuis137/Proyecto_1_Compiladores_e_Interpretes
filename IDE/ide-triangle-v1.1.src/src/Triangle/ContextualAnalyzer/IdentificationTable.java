@@ -60,12 +60,13 @@ public final class IdentificationTable {
    public void openPrivate(){
        /* idEntry[0] = elemento antes de la declaración private
         idEntry[1] = primer elemento angregado a la tabla luego del "in" el la
+       idEntry[2] = ultimo elemento agregado previo al in
        declaración private*/
-       IdEntry[] temp = {latest,null};
+       IdEntry[] temp = {latest,null,null};
        privateStack.add(temp);
    }
    
-   public void waitDeclaration(){ waitingDeclaration = true;}
+   public void waitDeclaration(){ waitingDeclaration = true; privateStack.peek()[2] = latest;}
    
    public void setPrivatePointer(IdEntry entry){
        privateStack.peek()[1]= entry;
@@ -75,7 +76,16 @@ public final class IdentificationTable {
    public void closePrivate(){
        if(!privateStack.empty()){
            IdEntry[] temp = privateStack.pop();
-           temp[1].previous = temp[0];
+           if(temp[1] != null){
+               temp[1].previous = temp[0];
+           }
+           else{
+               IdEntry t = latest;
+               while(t.previous != temp[2]){
+                   t = t.previous;
+               }
+               t.previous = temp[0];
+           }
        }
    }
   //AGREGADO
