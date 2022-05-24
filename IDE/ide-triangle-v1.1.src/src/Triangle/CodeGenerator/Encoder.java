@@ -152,19 +152,7 @@ public final class Encoder implements Visitor {
     return null;
   }
 
-  /*public Object visitWhileCommand(WhileCommand ast, Object o) {
-    Frame frame = (Frame) o;
-    int jumpAddr, loopAddr;
 
-    jumpAddr = nextInstrAddr;
-    emit(Machine.JUMPop, 0, Machine.CBr, 0);
-    loopAddr = nextInstrAddr;
-    ast.C.visit(this, frame);
-    patch(jumpAddr, nextInstrAddr);
-    ast.E.visit(this, frame);
-    emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
-    return null;
-  }*/
 
 
   // Expressions
