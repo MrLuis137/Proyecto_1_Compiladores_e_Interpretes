@@ -21,10 +21,10 @@ public final class IdentificationTable {
 
   private int level;
   private IdEntry latest;
-  //AGREGADO
+  
   private Stack<IdEntry[]> privateStack = new Stack<IdEntry[]>();
   private boolean waitingDeclaration = false;
-  //AGREGADO
+  
   
 
   public IdentificationTable () {
@@ -47,7 +47,7 @@ public final class IdentificationTable {
 
     IdEntry entry, local;
 
-    // Presumably, idTable.level > 0.
+    
     entry = this.latest;
     while (entry.level == this.level) {
       local = entry;
@@ -56,12 +56,9 @@ public final class IdentificationTable {
     this.level--;
     this.latest = entry;
   }
-  //AGREGADO
+  
    public void openPrivate(){
-       /* idEntry[0] = elemento antes de la declaración private
-        idEntry[1] = primer elemento angregado a la tabla luego del "in" el la
-       idEntry[2] = ultimo elemento agregado previo al in
-       declaración private*/
+   
        IdEntry[] temp = {latest,null,null};
        privateStack.add(temp);
    }
@@ -88,7 +85,7 @@ public final class IdentificationTable {
            }
        }
    }
-  //AGREGADO
+  
   
   
   // Makes a new entry in the identification table for the given identifier

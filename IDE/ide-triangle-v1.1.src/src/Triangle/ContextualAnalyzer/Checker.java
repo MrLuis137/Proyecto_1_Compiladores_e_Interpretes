@@ -154,13 +154,7 @@ public final class Checker implements Visitor {
     return null;
   }
 
-  /*public Object visitWhileCommand(WhileCommand ast, Object o) {
-    TypeDenoter eType = (TypeDenoter) ast.E.visit(this, null);
-    if (! eType.equals(StdEnvironment.booleanType))
-      reporter.reportError("Boolean expression expected here", "", ast.E.position);
-    ast.C.visit(this, null);
-    return null;
-  }*/
+
 
   // Expressions
 
@@ -777,7 +771,6 @@ public final class Checker implements Visitor {
     ast.visit(this, null);
   }
 
-  /////////////////////////////////////////////////////////////////////////////
 
   public Checker (ErrorReporter reporter) {
     this.reporter = reporter;
@@ -911,7 +904,7 @@ public final class Checker implements Visitor {
 
   private void establishStdEnvironment () {
 
-    // idTable.startIdentification();
+    
     StdEnvironment.booleanType = new BoolTypeDenoter(dummyPos);
     StdEnvironment.integerType = new IntTypeDenoter(dummyPos);
     StdEnvironment.charType = new CharTypeDenoter(dummyPos);
@@ -991,12 +984,7 @@ public final class Checker implements Visitor {
         ast.fdAST.visit(this, null);   
         idTable.openScope();
         idTable.enter(ast.fdAST.iAST.spelling, ast.fdAST);
-        /*int exp1 = Integer.parseInt(((IntegerExpression)ast.fdAST.esAST).IL.spelling);
-        int exp2 = Integer.parseInt(((IntegerExpression)ast.eAST).IL.spelling);
-        if(exp1 >= exp2 ){
-            reporter.reportError("Expression 2 must be bigger than Expression 1",
-                    ((IntegerExpression)ast.fdAST.esAST).IL.spelling, ast.eAST.position);
-        }*/
+
         if(ast.ceAST != null){
             eType = (TypeDenoter)ast.ceAST.visit(this, null);
             if (! eType.equals(StdEnvironment.booleanType))
@@ -1037,7 +1025,6 @@ public final class Checker implements Visitor {
              temp = temp.pfcsAST;
          }
         
-        //FALTA
         return null;
     }
 
@@ -1104,15 +1091,14 @@ public final class Checker implements Visitor {
         idTable.waitDeclaration();
         ast.dAST2.visit(this, null);
         idTable.closePrivate();
-        //Cuestiones de el declaration :,c
-        //idTable.enter(id, ast);
+
         return null;
     }
 
     @Override
     public Object visitInitializedVarDeclaration(InitializedVarDeclaration ast, Object o) {
         TypeDenoter type = (TypeDenoter)ast.E.visit(this, null);
-        //Declaration decAST = new VarDeclaration(ast.I, type, dummyPos);
+        
         idTable.enter(ast.I.spelling, ast);
         if(ast.duplicated){
             reporter.reportError ("identifier \"%\" already declared",
