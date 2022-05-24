@@ -1,12 +1,4 @@
-let
-
-  var a : Integer
-
-in
-  a := 0 ;
-  a := a + 1 ;
-  putint (a) 
-
+for i from 1 .. 10 do 
+    getint (var i); ! debe dar un error, variable protegida no deber??a poder pasarse por referencia
+    putint (i) 
 end
-
- 
