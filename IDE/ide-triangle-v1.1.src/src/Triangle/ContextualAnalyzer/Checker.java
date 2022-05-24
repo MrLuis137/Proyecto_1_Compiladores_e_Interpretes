@@ -591,9 +591,11 @@ public final class Checker implements Visitor {
     ast.T = (TypeDenoter) ast.T.visit(this, null);
     if ((Integer.valueOf(ast.IL.spelling).intValue()) == 0)
       reporter.reportError ("arrays must not be empty", "", ast.IL.position);
+    //------C�digo agregado hecho en grupo durante llamada------
     if(ast.ilAST2 != null && Integer.parseInt(ast.IL.spelling) > Integer.parseInt(ast.ilAST2.spelling)){
         reporter.reportError ("The lower bound is greater than the upper bound", "", ast.IL.position);
     }
+    //------C�digo agregado hecho en grupo durante llamada------
     return ast;
  }
 
@@ -721,12 +723,14 @@ public final class Checker implements Visitor {
         ast.type = ((VarFormalParameter) binding).T;
         ast.variable = true; 
       }
+    //------C�digo agregado hecho en grupo durante llamada------
       else if(binding instanceof ForVarDeclaration){
           ast.type = StdEnvironment.integerType;
           ast.variable = false;
       }else if(binding instanceof InitializedVarDeclaration){
           ast.type = ((InitializedVarDeclaration) binding).E.type;
           ast.variable = true;
+    //------C�digo agregado hecho en grupo durante llamada------
       } else
           
         reporter.reportError ("\"%\" is not a const or var identifier",
@@ -952,6 +956,7 @@ public final class Checker implements Visitor {
 
   }
 
+    //------C�digo agregado hecho en grupo durante llamada------
     @Override
     public Object visitRepeat(Repeat ast, Object o) {
         TypeDenoter eType = (TypeDenoter)ast.eAST.visit(this, null);
@@ -1107,7 +1112,7 @@ public final class Checker implements Visitor {
         return null;
     }
 }
-
+    //------C�digo agregado hecho en grupo durante llamada------
 
 /*
 
@@ -1127,11 +1132,11 @@ public final class Checker implements Visitor {
 
 
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⣉⣁⣤⣤⣶⣾⣿⣿⣶⡄⢲⣯⢍⠁⠄⢀⢹⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⢯⣾⣿⣿⣏⣉⣹⠿⠇⠄⠽⠿⢷⡈⠿⠇⣀⣻⣿⡿⣻
-⣿⣿⡿⠿⠛⠛⠛⢛⡃⢉⢣⡤⠤⢄⡶⠂⠄⠐⣀⠄⠄⠄⠄⠄⡦⣿⡿⠛⡇⣼
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⣉�?⣤⣤⣶⣾⣿⣿⣶⡄⢲⣯�?�?⠄⢀⢹⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⢯⣾⣿⣿�?⣉⣹⠿⠇⠄⠽⠿⢷⡈⠿⠇⣀⣻⣿⡿⣻
+⣿⣿⡿⠿⠛⠛⠛⢛⡃⢉⢣⡤⠤⢄⡶⠂⠄�?⣀⠄⠄⠄⠄⠄⡦⣿⡿⠛⡇⣼
 ⡿⢫⣤⣦⠄⠂⠄⠄⠄⠄⠄⠄⠄⠄⠠⠺⠿⠙⠋⠄⠄⠄⠢⢄⠄⢿⠇⠂⠧⣿
-⠁⠄⠈⠁⠄⢀⣀⣀⣀⣀⣠⣤⡤⠴⠖⠒⠄⠄⠄⠄⠄⠄⠄⠄⠄⠘⢠⡞⠄⣸
+�?⠄⠈�?⠄⢀⣀⣀⣀⣀⣠⣤⡤⠴⠖⠒⠄⠄⠄⠄⠄⠄⠄⠄⠄⠘⢠⡞⠄⣸
 ⡀⠄⠄⠄⠄⠄⠤⠭⠦⠤⠤⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣂⣿
 ⣷⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢳⠄⠄⢀⠈⣠⣤⣤⣼⣿
 ⣿⣿⣷⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣴⣶⣶⣶⣄⡀⠄⠈⠑⢙⣡⣴⣿⣿⣿⣿⣿

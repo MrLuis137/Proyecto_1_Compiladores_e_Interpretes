@@ -56,7 +56,7 @@ public final class IdentificationTable {
     this.level--;
     this.latest = entry;
   }
-  
+  //------Código agregado hecho en grupo durante llamada------
    public void openPrivate(){
    
        IdEntry[] temp = {latest,null,null};
@@ -85,7 +85,7 @@ public final class IdentificationTable {
            }
        }
    }
-  
+   //------Código agregado hecho en grupo durante llamada------
   
   
   // Makes a new entry in the identification table for the given identifier
