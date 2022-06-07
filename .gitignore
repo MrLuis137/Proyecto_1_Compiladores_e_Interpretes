@@ -11,3 +11,6 @@ IDE/ide-triangle-v1.1.src/test/TEST.tri
 *.class
 *.class
 IDE/ide-triangle-v1.1.src/test/TEST.tri
+/Entrega 2/ide-triangle-v1.1.src/build/
+/Entrega 2/ide-triangle-v1.1.src/dist/
+/Entrega 2/ide-triangle-v1.1.src/nbproject/private/
