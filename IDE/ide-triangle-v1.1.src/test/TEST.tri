@@ -1,4 +1,4 @@
 for i from 1 .. 10 do 
-    getint (var i); ! debe dar un error, variable protegida no deber??a poder pasarse por referencia
+    nothing;
     putint (i) 
 end
