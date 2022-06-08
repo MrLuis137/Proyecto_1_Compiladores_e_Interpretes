@@ -98,6 +98,7 @@ import Triangle.AbstractSyntaxTrees.VarFormalParameter;
 import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
+import Triangle.SyntacticAnalyzer.SourcePosition;
 
 public final class Encoder implements Visitor {
 
@@ -821,6 +822,7 @@ public final class Encoder implements Visitor {
   boolean tableDetailsReqd;
 
   public static void writeTableDetails(AST ast) {
+      
   }
 
   // OBJECT CODE
@@ -1036,18 +1038,13 @@ public final class Encoder implements Visitor {
     @Override
     public Object visitInitializedVarDeclaration(InitializedVarDeclaration ast, Object o) {
         Frame frame = (Frame) o;
-        //extraSize = ((Integer) ast.E.visit(this, null)).intValue();
-
-        /*if( ast.E.type == StdEnvironment.booleanType || 
-                ast.E.type == StdEnvironment.charType){
-            extraSize = 1;
-        }
-        else if(ast.E.type == StdEnvironment.integerType){
-        }*/
         int valSize = (Integer) ast.E.type.visit(this, null);
         emit(Machine.PUSHop, 0, 0, valSize);
         ast.entity = new KnownAddress(Machine.addressSize, frame.level, frame.size);
         ast.E.visit(this, o);
+        Vname v = new SimpleVname(ast.I, new SourcePosition());
+        //encodeStore(v, new Frame (frame, valSize),
+	//	valSize);
         writeTableDetails(ast);
         return valSize;
     }

@@ -1,6 +1,8 @@
 let
-var i := true;
+var i := 's';
 var j : Integer
 in
-j := 0-5  
+j := 3;
+put(i);
+putint(j)
 end
