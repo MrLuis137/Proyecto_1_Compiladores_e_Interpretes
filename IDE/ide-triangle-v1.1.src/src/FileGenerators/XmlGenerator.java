@@ -93,9 +93,9 @@ public class XmlGenerator {
 
     
     public void generateXML(DefaultMutableTreeNode tree, String path) throws IOException, TransformerException {
-        System.out.println("----------- " +
-                           "Generando XML..." +
-                           "----------- ");
+        //System.out.println("----------- " +
+          //                 "Generando XML..." +
+            //               "----------- ");
         
         //procedemos a viajar por el arbol y hacer el xml
         traverseTree(tree, root);
@@ -168,9 +168,9 @@ public class XmlGenerator {
 
         transformer.transform(source, result);
         
-        System.out.println("----------- " +
-                           "XML Generado!" +
-                           "----------- ");
+        //System.out.println("----------- " +
+          //                 "XML Generado!" +
+            //               "----------- ");
 
     }
 }

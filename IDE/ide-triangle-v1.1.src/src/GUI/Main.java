@@ -632,7 +632,7 @@ public class Main extends javax.swing.JFrame {
 
                 }
                 catch(Exception e) {
-                    JOptionPane.showMessageDialog(null, "Hubo un error al generar el XML \n" + e, "Error", JOptionPane.ERROR_MESSAGE);
+                    //JOptionPane.showMessageDialog(null, "Hubo un error al generar el XML \n" + e, "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 
                 

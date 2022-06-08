@@ -89,6 +89,7 @@ import Triangle.AbstractSyntaxTrees.SingleFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.SingleRecordAggregate;
 import Triangle.AbstractSyntaxTrees.SubscriptVname;
 import Triangle.AbstractSyntaxTrees.TypeDeclaration;
+import Triangle.AbstractSyntaxTrees.TypeDenoter;
 import Triangle.AbstractSyntaxTrees.UnaryExpression;
 import Triangle.AbstractSyntaxTrees.UnaryOperatorDeclaration;
 import Triangle.AbstractSyntaxTrees.VarActualParameter;
@@ -1034,6 +1035,20 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitInitializedVarDeclaration(InitializedVarDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Frame frame = (Frame) o;
+        //extraSize = ((Integer) ast.E.visit(this, null)).intValue();
+
+        /*if( ast.E.type == StdEnvironment.booleanType || 
+                ast.E.type == StdEnvironment.charType){
+            extraSize = 1;
+        }
+        else if(ast.E.type == StdEnvironment.integerType){
+        }*/
+        int valSize = (Integer) ast.E.type.visit(this, null);
+        emit(Machine.PUSHop, 0, 0, valSize);
+        ast.entity = new KnownAddress(Machine.addressSize, frame.level, frame.size);
+        ast.E.visit(this, o);
+        writeTableDetails(ast);
+        return valSize;
     }
 }
