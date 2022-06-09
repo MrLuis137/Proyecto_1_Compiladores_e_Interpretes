@@ -46,6 +46,7 @@ import Triangle.AbstractSyntaxTrees.EmptyCommand;
 import Triangle.AbstractSyntaxTrees.EmptyExpression;
 import Triangle.AbstractSyntaxTrees.EmptyFormalParameterSequence;
 import Triangle.AbstractSyntaxTrees.ErrorTypeDenoter;
+import Triangle.AbstractSyntaxTrees.Expression;
 import Triangle.AbstractSyntaxTrees.ForCommand;
 import Triangle.AbstractSyntaxTrees.ForVarDeclaration;
 import Triangle.AbstractSyntaxTrees.FuncActualParameter;
@@ -997,12 +998,65 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitRepeat(Repeat ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Frame frame = (Frame) o;
+        int jumpAddr, loopAddr;
+        if(ast.isWhile){
+          
+          jumpAddr = nextInstrAddr;
+          emit(Machine.JUMPop, 0, Machine.CBr, 0);
+          loopAddr = nextInstrAddr;
+          ast.cAST.visit(this, frame);
+          patch(jumpAddr, nextInstrAddr);
+          ast.eAST.visit(this, frame);
+          emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+
+        }
+        else{
+        
+          jumpAddr = nextInstrAddr;
+          emit(Machine.JUMPop, 0, Machine.CBr, 0);
+          loopAddr = nextInstrAddr;
+          ast.cAST.visit(this, frame);
+          patch(jumpAddr, nextInstrAddr);
+          ast.eAST.visit(this, frame);
+          emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, loopAddr);
+        }
+        if(ast.lAST != null){
+            ast.lAST.visit(this, o);
+        }
+        return null;
     }
 
     @Override
     public Object visitRepeatDo(RepeatDo ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         Frame frame = (Frame) o;
+        int jumpAddr, loopAddr;
+        if(ast.isWhile){
+          
+          //jumpAddr = nextInstrAddr;
+          //emit(Machine.JUMPop, 0, Machine.CBr, 0);
+          loopAddr = nextInstrAddr;
+          ast.cAST.visit(this, frame);
+          //patch(jumpAddr, nextInstrAddr);
+          ast.eAST.visit(this, frame);
+          emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+
+        }
+        else{
+        
+          //jumpAddr = nextInstrAddr;
+          //emit(Machine.JUMPop, 0, Machine.CBr, 0);
+          loopAddr = nextInstrAddr;
+          ast.cAST.visit(this, frame);
+          //patch(jumpAddr, nextInstrAddr);
+          ast.eAST.visit(this, frame);
+          emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, loopAddr);
+          
+        }
+        if(ast.lAST != null){
+            ast.lAST.visit(this, o);
+        }
+        return null;
     }
 
     @Override
@@ -1017,7 +1071,7 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitNothing(Nothing ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return(0);
     }
 
     @Override
@@ -1042,9 +1096,9 @@ public final class Encoder implements Visitor {
         emit(Machine.PUSHop, 0, 0, valSize);
         ast.entity = new KnownAddress(Machine.addressSize, frame.level, frame.size);
         ast.E.visit(this, o);
-        Vname v = new SimpleVname(ast.I, new SourcePosition());
-        //encodeStore(v, new Frame (frame, valSize),
-	//	valSize);
+        ObjectAddress address = ((KnownAddress) ast.entity).address;
+        emit(Machine.STOREop, valSize, displayRegister(frame.level,
+	    address.level), address.displacement);
         writeTableDetails(ast);
         return valSize;
     }

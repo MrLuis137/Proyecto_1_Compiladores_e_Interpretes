@@ -22,6 +22,7 @@ public class RepeatDo extends Command{
         this.eAST = eAST;
         this.cAST = cAST;
         this.lAST = lAST;
+        this.isWhile = isWhile;
     }
 
     @Override
