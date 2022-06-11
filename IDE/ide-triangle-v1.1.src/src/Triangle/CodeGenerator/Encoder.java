@@ -127,7 +127,6 @@ public final class Encoder implements Visitor {
   public Object visitIfCommand(IfCommand ast, Object o) {
     Frame frame = (Frame) o;
     int jumpifAddr, jumpAddr;
-
     Integer valSize = (Integer) ast.E.visit(this, frame);
     jumpifAddr = nextInstrAddr;
     emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, 0);
@@ -167,7 +166,7 @@ public final class Encoder implements Visitor {
   public Object visitBinaryExpression(BinaryExpression ast, Object o) {
     Frame frame = (Frame) o;
     Integer valSize = (Integer) ast.type.visit(this, null);
-    int valSize1 = ((Integer) ast.E1.visit(this, frame)).intValue();
+    int valSize1 = ((Integer) ast.E1.visit(this, frame));
     Frame frame1 = new Frame(frame, valSize1);
     int valSize2 = ((Integer) ast.E2.visit(this, frame1)).intValue();
     Frame frame2 = new Frame(frame.level, valSize1 + valSize2);
@@ -995,6 +994,8 @@ public final class Encoder implements Visitor {
       }
     }
   }
+  
+  //-----------------------Editado-------------------------------------------------
 
     @Override
     public Object visitRepeat(Repeat ast, Object o) {
@@ -1061,12 +1062,51 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitForCommand(ForCommand ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Frame frame = (Frame) o;
+        int jumpAddr, loopAddr;
+        int valSize = (Integer)ast.fdAST.visit(this, o);
+        Identifier variableControl = ast.fdAST.iAST;
+        loopAddr = nextInstrAddr;
+        ObjectAddress address = ((KnownAddress) ast.fdAST.entity).address;
+        
+        jumpAddr = nextInstrAddr;
+        emit(Machine.JUMPop, 0, Machine.CBr, 0);
+            loopAddr = nextInstrAddr;
+        ast.cAST.visit(this, o);
+        //Carga el controlador
+        emit(Machine.LOADop, valSize, displayRegister(frame.level,
+	     address.level), address.displacement);
+        //Cargar la constante 1
+        emit(Machine.LOADLop, 0, 0, 1);
+        emit(Machine.CALLop, Machine.SBr, Machine.PBr, 8);
+        emit(Machine.STOREop, valSize, displayRegister(frame.level,
+	    address.level), address.displacement);
+        patch(jumpAddr, nextInstrAddr);
+        emit(Machine.LOADop, valSize, displayRegister(frame.level,
+	     address.level), address.displacement);
+        //Dirección de el contador
+        ast.eAST.visit(this, o);
+        //conseguir y agregar en algún lado el segundo expression
+        emit(Machine.CALLop, Machine.SBr, Machine.PBr, 14);
+        emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+        if(ast.lAST != null){
+            ast.lAST.visit(this, o);
+        }
+        return null;
     }
 
     @Override
     public Object visitForCommandDef(ForVarDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Frame frame = (Frame) o;
+        int valSize = (Integer) ast.esAST.type.visit(this, null);
+        emit(Machine.PUSHop, 0, 0, valSize);
+        ast.entity = new KnownAddress(Machine.addressSize, frame.level, frame.size);
+        ast.esAST.visit(this, o);
+        ObjectAddress address = ((KnownAddress) ast.entity).address;
+        emit(Machine.STOREop, valSize, displayRegister(frame.level,
+	    address.level), address.displacement);
+        writeTableDetails(ast);
+        return valSize;
     }
 
     @Override
