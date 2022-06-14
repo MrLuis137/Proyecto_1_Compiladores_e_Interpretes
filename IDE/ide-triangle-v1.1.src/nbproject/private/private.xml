@@ -7,12 +7,12 @@
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/SyntacticAnalyzer/Parser.java</file>
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/CodeGenerator/KnownAddress.java</file>
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/AbstractSyntaxTrees/RepeatDo.java</file>
+            <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/AbstractSyntaxTrees/BinaryExpression.java</file>
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Core/Visitors/TableVisitor.java</file>
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/AbstractSyntaxTrees/BoolTypeDenoter.java</file>
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/TAM/Interpreter.java</file>
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/CodeGenerator/KnownValue.java</file>
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/AbstractSyntaxTrees/SimpleVname.java</file>
-            <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/AbstractSyntaxTrees/Expression.java</file>
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/AbstractSyntaxTrees/VnameExpression.java</file>
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/ContextualAnalyzer/Checker.java</file>
             <file>file:/F:/Documentos%20locales/Git/Proyecto_1_Compiladores_e_Interpretes/IDE/ide-triangle-v1.1.src/src/Triangle/AbstractSyntaxTrees/Repeat.java</file>

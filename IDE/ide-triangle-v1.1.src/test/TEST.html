@@ -97,10 +97,23 @@
         <div class="dot green"></div>
    </div>
    
-<pre><code id="code">for i from 1 .. 6
-do
-putint(i)
-end;</code></pre>
+<pre><code id="code">let
+  private
+    var a := 1
+  in
+    private
+      var b := a + 1 ! a visible aqu??
+    in
+      var c := b + 78 ! a y b visibles aqu?
+    end
+    ;
+    var d := a + c ! a y c visibles aqu?
+  end
+in
+  putint(d);
+puteol();
+putint(c)
+end</code></pre>
   </div>
 </body>
 

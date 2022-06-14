@@ -1063,12 +1063,13 @@ public final class Encoder implements Visitor {
     @Override
     public Object visitForCommand(ForCommand ast, Object o) {
         Frame frame = (Frame) o;
-        int jumpAddr, loopAddr;
+        int jumpAddr, loopAddr, exitAddr;
         int valSize = (Integer)ast.fdAST.visit(this, o);
         Identifier variableControl = ast.fdAST.iAST;
         loopAddr = nextInstrAddr;
-        ObjectAddress address = ((KnownAddress) ast.fdAST.entity).address;
         
+        ObjectAddress address = ((KnownAddress) ast.fdAST.entity).address;
+        boolean condition = ast.ceAST != null;
         jumpAddr = nextInstrAddr;
         emit(Machine.JUMPop, 0, Machine.CBr, 0);
             loopAddr = nextInstrAddr;
@@ -1081,17 +1082,32 @@ public final class Encoder implements Visitor {
         emit(Machine.CALLop, Machine.SBr, Machine.PBr, 8);
         emit(Machine.STOREop, valSize, displayRegister(frame.level,
 	    address.level), address.displacement);
+        //Condiciones
         patch(jumpAddr, nextInstrAddr);
+        exitAddr = nextInstrAddr;
+        if(condition){
+            
+            ast.ceAST.visit(this, o);
+            if(ast.isWhile)
+                emit(Machine.JUMPIFop, Machine.falseRep, Machine.CBr, exitAddr  = nextInstrAddr);
+            else
+                emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, exitAddr  = nextInstrAddr);
+        }
+        
+        //Dirección de el contador
         emit(Machine.LOADop, valSize, displayRegister(frame.level,
 	     address.level), address.displacement);
-        //Dirección de el contador
-        ast.eAST.visit(this, o);
         //conseguir y agregar en algún lado el segundo expression
+        ast.eAST.visit(this, o);
+        //llama a la comparación
         emit(Machine.CALLop, Machine.SBr, Machine.PBr, 14);
         emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
+        if(condition)
+            patch(exitAddr, nextInstrAddr);
         if(ast.lAST != null){
             ast.lAST.visit(this, o);
         }
+        writeTableDetails(ast);
         return null;
     }
 
@@ -1105,7 +1121,7 @@ public final class Encoder implements Visitor {
         ObjectAddress address = ((KnownAddress) ast.entity).address;
         emit(Machine.STOREop, valSize, displayRegister(frame.level,
 	    address.level), address.displacement);
-        writeTableDetails(ast);
+
         return valSize;
     }
 
@@ -1126,7 +1142,12 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Frame frame = (Frame) o;
+        frame.level++;
+        ast.dAST.visit(this, frame);
+        ast.dAST2 .visit(this, o);
+        
+        return 0;
     }
 
     @Override

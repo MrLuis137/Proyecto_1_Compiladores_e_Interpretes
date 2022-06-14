@@ -124,6 +124,14 @@ public class TableVisitor implements Visitor {
 public Object visitForCommandDef(ForVarDeclaration ast, Object o){
     ast.iAST.visit(this, o);
     ast.esAST.visit(this, o);
+    try {
+      addIdentifier(ast.iAST.spelling, 
+              "KnownAddress", 
+              (ast.entity!=null?ast.entity.size:0), 
+              ((KnownAddress)ast.entity).address.level, 
+              ((KnownAddress)ast.entity).address.displacement, 
+              -1);
+      } catch (NullPointerException e) { }
     return null;
 }
   
