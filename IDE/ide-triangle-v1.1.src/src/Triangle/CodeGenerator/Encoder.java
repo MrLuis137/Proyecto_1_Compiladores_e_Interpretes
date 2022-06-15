@@ -1143,11 +1143,12 @@ public final class Encoder implements Visitor {
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
         Frame frame = (Frame) o;
-        frame.level++;
-        ast.dAST.visit(this, frame);
-        ast.dAST2 .visit(this, o);
+        int extraSize1, extraSize2;
+        extraSize1 = (int)ast.dAST.visit(this, frame);
+        Frame frame1 = new Frame(frame, extraSize1);
+        extraSize2 = (int)ast.dAST2 .visit(this, frame1);
+        return extraSize1 + extraSize2;
         
-        return 0;
     }
 
     @Override
