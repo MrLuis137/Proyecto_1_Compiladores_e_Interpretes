@@ -98,20 +98,20 @@
    </div>
    
 <pre><code id="code">let
-  private
-    var a := 1
-  in
-    private
-      var b := a + 1 ! a visible aqu??
-    in
-      var c := b + a ! a y b visibles aqu?
-    end
-    ;
-    var d := a + c ! a y c visibles aqu?
-  end
+private
+var f := 0;
+recursive
+proc fib(n : Integer) ~ if n <= 1 then nothing 
+else f :=  sum(fib(n-1), fib(n-2))end
+end
+and
+func sum(a:Integer ,b: Integer) :integer ~ a+b 
+end
 in
-  putint(c) ! c debe ser visible aqu??
-end</code></pre>
+fib(9);
+putint(f)
+end
+</code></pre>
   </div>
 </body>
 

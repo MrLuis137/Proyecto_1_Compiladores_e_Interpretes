@@ -14,6 +14,9 @@
 
 package Triangle.CodeGenerator;
 
+import java.util.HashMap;
+import java.util.ArrayList;
+
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -100,9 +103,11 @@ import Triangle.AbstractSyntaxTrees.Visitor;
 import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.SyntacticAnalyzer.SourcePosition;
+import java.util.ArrayList;
 
 public final class Encoder implements Visitor {
 
+  HashMap identifiers = new HashMap<String, ArrayList<Integer>>();
 
   // Commands
   public Object visitAssignCommand(AssignCommand ast, Object o) {
@@ -633,6 +638,21 @@ public final class Encoder implements Visitor {
       emit(Machine.LOADLop, 0, 0, frame.size / 2);
       emit(Machine.CALLop, Machine.SBr, Machine.PBr, displacement);
     }
+    else{
+        ArrayList<Integer> addresList = new ArrayList<Integer>();
+        if(identifiers.containsKey(ast.spelling)){
+            addresList = (ArrayList<Integer>)identifiers.get(ast.spelling);
+        }
+
+        int rutineAddr = 0;
+        emit(Machine.CALLop, displayRegister(frame.level, frame.level),
+	   Machine.CBr, rutineAddr  = nextInstrAddr);
+        addresList.add(rutineAddr);
+        if(!identifiers.containsKey(ast.spelling)){
+            identifiers.put(ast.spelling, addresList);
+        }
+        
+    }
     return null;
   }
 
@@ -1114,7 +1134,7 @@ public final class Encoder implements Visitor {
     @Override
     public Object visitForCommandDef(ForVarDeclaration ast, Object o) {
         Frame frame = (Frame) o;
-        int valSize = (Integer) ast.esAST.type.visit(this, null);
+        int valSize = (Integer) ast.esAST.type.visit(this, o);
         emit(Machine.PUSHop, 0, 0, valSize);
         ast.entity = new KnownAddress(Machine.addressSize, frame.level, frame.size);
         ast.esAST.visit(this, o);
@@ -1132,12 +1152,80 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        HashMap identificadores = new HashMap<String, int[]>();
+        RecursiveDeclaration temp = ast; 
+        while(temp != null){
+             temp.pfAST.visit(this, o);
+             temp = temp.pfcsAST;
+         }
+         temp = ast;
+
+        return 0;
     }
 
     @Override
     public Object visitProcFunc(ProcFunc ast, Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (ast.fAST != null){
+            Frame frame = (Frame) o;
+            int jumpAddr = nextInstrAddr;
+            int argsSize = 0, valSize = 0;
+            
+            emit(Machine.JUMPop, 0, Machine.CBr, 0);
+            ast.fAST.entity = new KnownRoutine(Machine.closureSize, frame.level, nextInstrAddr);
+            if(identifiers.containsKey(ast.fAST.I.spelling)){
+                ArrayList<Integer> temp = (ArrayList<Integer>)identifiers.get(ast.fAST.I.spelling);
+                for (Integer i : temp){
+                    System.out.println(i);
+                    patch(i, nextInstrAddr);
+                    System.out.println(i);
+                }
+                identifiers.remove(ast.pAST.I.spelling);
+            }
+            writeTableDetails(ast.fAST);
+            if (frame.level == Machine.maxRoutineLevel)
+              reporter.reportRestriction("can't nest routines more than 7 deep");
+            else {
+              Frame frame1 = new Frame(frame.level + 1, 0);
+              argsSize = ((Integer) ast.fAST.FPS.visit(this, frame1)).intValue();
+              Frame frame2 = new Frame(frame.level + 1, Machine.linkDataSize);
+              valSize = ((Integer) ast.fAST.E.visit(this, frame2)).intValue();
+              
+            }
+            emit(Machine.RETURNop, valSize, 0, argsSize);
+            patch(jumpAddr, nextInstrAddr);
+            return new Integer(0);
+            }
+        else{
+            Frame frame = (Frame) o;
+            int jumpAddr = nextInstrAddr;
+            int argsSize = 0;
+
+            emit(Machine.JUMPop, 0, Machine.CBr, 0);
+            ast.pAST.entity = new KnownRoutine (Machine.closureSize, frame.level,
+                                        nextInstrAddr);
+            if(identifiers.containsKey(ast.pAST.I.spelling)){
+                ArrayList<Integer> temp = (ArrayList<Integer>)identifiers.get(ast.pAST.I.spelling);
+                for (Integer i : temp){
+                    System.out.println(i);
+                    patch(i, nextInstrAddr);
+                    System.out.println(i);
+                }
+                identifiers.remove(ast.pAST.I.spelling);
+            }
+            writeTableDetails(ast);
+            if (frame.level == Machine.maxRoutineLevel)
+              reporter.reportRestriction("can't nest routines so deeply");
+            else {
+              Frame frame1 = new Frame(frame.level + 1, 0);
+              argsSize = ((Integer) ast.pAST.FPS.visit(this, frame1)).intValue();
+              Frame frame2 = new Frame(frame.level + 1, Machine.linkDataSize);
+              ast.pAST.C.visit(this, frame2);
+            }
+            emit(Machine.RETURNop, 0, 0, argsSize);
+            patch(jumpAddr, nextInstrAddr);
+            return new Integer(0);
+        }
+        
     }
 
     @Override
