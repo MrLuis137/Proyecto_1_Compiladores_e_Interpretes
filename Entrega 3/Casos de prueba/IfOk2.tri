@@ -1,0 +1,7 @@
+if 1=1 then put('a')
+elsif 2=2 then put('b')
+elsif 3=3 then put('b')
+else put('b')
+end
+
+! OK

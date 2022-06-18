@@ -1175,11 +1175,9 @@ public final class Encoder implements Visitor {
             if(identifiers.containsKey(ast.fAST.I.spelling)){
                 ArrayList<Integer> temp = (ArrayList<Integer>)identifiers.get(ast.fAST.I.spelling);
                 for (Integer i : temp){
-                    System.out.println(i);
                     patch(i, nextInstrAddr);
-                    System.out.println(i);
                 }
-                identifiers.remove(ast.pAST.I.spelling);
+                identifiers.remove(ast.fAST.I.spelling);
             }
             writeTableDetails(ast.fAST);
             if (frame.level == Machine.maxRoutineLevel)

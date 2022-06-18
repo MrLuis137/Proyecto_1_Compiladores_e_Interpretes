@@ -97,21 +97,17 @@
         <div class="dot green"></div>
    </div>
    
-<pre><code id="code">let
-private
-var f := 0;
-recursive
-proc fib(n : Integer) ~ if n <= 1 then nothing 
-else f :=  sum(fib(n-1), fib(n-2))end
-end
-and
-func sum(a:Integer ,b: Integer) :integer ~ a+b 
-end
+<pre><code id="code">! Funciones mutuamente recursivas, anterior ve a posterior
+let
+  recursive
+    func f (a : Integer): Integer ~ 1 + g(a - 1)
+    and
+    func g (b : Integer): Integer ~ 1
+  end
 in
-fib(9);
-putint(f)
+  putint(f(10))
 end
-</code></pre>
+ </code></pre>
   </div>
 </body>
 
