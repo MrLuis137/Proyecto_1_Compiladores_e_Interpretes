@@ -104,10 +104,12 @@ import Triangle.AbstractSyntaxTrees.Vname;
 import Triangle.AbstractSyntaxTrees.VnameExpression;
 import Triangle.SyntacticAnalyzer.SourcePosition;
 import java.util.ArrayList;
+import Core.Visitors.TableVisitor;
 
 public final class Encoder implements Visitor {
 
   HashMap identifiers = new HashMap<String, ArrayList<Integer>>();
+  TableVisitor tableVisitor = new TableVisitor();
 
   // Commands
   public Object visitAssignCommand(AssignCommand ast, Object o) {
@@ -279,7 +281,8 @@ public final class Encoder implements Visitor {
       ast.entity = new UnknownValue(valSize, frame.level, frame.size);
       extraSize = valSize;
     }
-    writeTableDetails(ast);
+    //writeTableDetails(ast);
+    tableVisitor.visitConstDeclaration(ast, o);
     return new Integer(extraSize);
   }
 
@@ -290,7 +293,9 @@ public final class Encoder implements Visitor {
 
     emit(Machine.JUMPop, 0, Machine.CBr, 0);
     ast.entity = new KnownRoutine(Machine.closureSize, frame.level, nextInstrAddr);
-    writeTableDetails(ast);
+    
+    tableVisitor.visitFuncDeclaration(ast, o);
+    //writeTableDetails(ast);
     if (frame.level == Machine.maxRoutineLevel)
       reporter.reportRestriction("can't nest routines more than 7 deep");
     else {
@@ -312,7 +317,9 @@ public final class Encoder implements Visitor {
     emit(Machine.JUMPop, 0, Machine.CBr, 0);
     ast.entity = new KnownRoutine (Machine.closureSize, frame.level,
                                 nextInstrAddr);
-    writeTableDetails(ast);
+    //writeTableDetails(ast);
+    tableVisitor.visitProcDeclaration(ast, o);
+    
     if (frame.level == Machine.maxRoutineLevel)
       reporter.reportRestriction("can't nest routines so deeply");
     else {
@@ -354,7 +361,8 @@ public final class Encoder implements Visitor {
     extraSize = ((Integer) ast.T.visit(this, null)).intValue();
     emit(Machine.PUSHop, 0, 0, extraSize);
     ast.entity = new KnownAddress(Machine.addressSize, frame.level, frame.size);
-    writeTableDetails(ast);
+    //writeTableDetails(ast);
+    tableVisitor.visitVarDeclaration(ast, o);
     return new Integer(extraSize);
   }
 
@@ -395,7 +403,8 @@ public final class Encoder implements Visitor {
     Frame frame = (Frame) o;
     int valSize = ((Integer) ast.T.visit(this, null)).intValue();
     ast.entity = new UnknownValue (valSize, frame.level, -frame.size - valSize);
-    writeTableDetails(ast);
+    //writeTableDetails(ast);
+    tableVisitor.visitConstFormalParameter(ast, o);
     return new Integer(valSize);
   }
 
@@ -404,7 +413,8 @@ public final class Encoder implements Visitor {
     int argsSize = Machine.closureSize;
     ast.entity = new UnknownRoutine (Machine.closureSize, frame.level,
 				  -frame.size - argsSize);
-    writeTableDetails(ast);
+    //writeTableDetails(ast);
+    tableVisitor.visitFuncFormalParameter(ast, o);
     return new Integer(argsSize);
   }
 
@@ -413,7 +423,8 @@ public final class Encoder implements Visitor {
     int argsSize = Machine.closureSize;
     ast.entity = new UnknownRoutine (Machine.closureSize, frame.level,
 				  -frame.size - argsSize);
-    writeTableDetails(ast);
+    //writeTableDetails(ast);
+    tableVisitor.visitProcFormalParameter(ast, o);
     return new Integer(argsSize);
   }
 
@@ -422,7 +433,8 @@ public final class Encoder implements Visitor {
     ast.T.visit(this, null);
     ast.entity = new UnknownAddress (Machine.addressSize, frame.level,
 				  -frame.size - Machine.addressSize);
-    writeTableDetails(ast);
+    //writeTableDetails(ast);
+    tableVisitor.visitVarFormalParameter(ast, o);
     return new Integer(Machine.addressSize);
   }
 
@@ -529,7 +541,8 @@ public final class Encoder implements Visitor {
       int elemSize = ((Integer) ast.T.visit(this, null)).intValue();
       typeSize = Integer.parseInt(ast.IL.spelling) * elemSize;
       ast.entity = new TypeRepresentation(typeSize);
-      writeTableDetails(ast);
+      //writeTableDetails(ast);
+      tableVisitor.visitArrayTypeDenoter(ast, o);
     } else
       typeSize = ast.entity.size;
     return new Integer(typeSize);
@@ -538,7 +551,8 @@ public final class Encoder implements Visitor {
   public Object visitBoolTypeDenoter(BoolTypeDenoter ast, Object o) {
     if (ast.entity == null) {
       ast.entity = new TypeRepresentation(Machine.booleanSize);
-      writeTableDetails(ast);
+      tableVisitor.visitBoolTypeDenoter(ast, o);
+      //writeTableDetails(ast);
     }
     return new Integer(Machine.booleanSize);
   }
@@ -546,7 +560,8 @@ public final class Encoder implements Visitor {
   public Object visitCharTypeDenoter(CharTypeDenoter ast, Object o) {
     if (ast.entity == null) {
       ast.entity = new TypeRepresentation(Machine.characterSize);
-      writeTableDetails(ast);
+      //writeTableDetails(ast);
+      tableVisitor.visitCharTypeDenoter(ast, o);
     }
     return new Integer(Machine.characterSize);
   }
@@ -563,7 +578,8 @@ public final class Encoder implements Visitor {
   public Object visitIntTypeDenoter(IntTypeDenoter ast, Object o) {
     if (ast.entity == null) {
       ast.entity = new TypeRepresentation(Machine.integerSize);
-      writeTableDetails(ast);
+      //writeTableDetails(ast);
+      tableVisitor.visitIntTypeDenoter(ast, o);
     }
     return new Integer(Machine.integerSize);
   }
@@ -573,7 +589,8 @@ public final class Encoder implements Visitor {
     if (ast.entity == null) {
       typeSize = ((Integer) ast.FT.visit(this, new Integer(0))).intValue();
       ast.entity = new TypeRepresentation(typeSize);
-      writeTableDetails(ast);
+      //writeTableDetails(ast);
+      tableVisitor.visitRecordTypeDenoter(ast, o);
     } else
       typeSize = ast.entity.size;
     return new Integer(typeSize);
@@ -588,7 +605,8 @@ public final class Encoder implements Visitor {
     if (ast.entity == null) {
       fieldSize = ((Integer) ast.T.visit(this, null)).intValue();
       ast.entity = new Field (fieldSize, offset);
-      writeTableDetails(ast);
+      //writeTableDetails(ast);
+      tableVisitor.visitMultipleFieldTypeDenoter(ast, o);
     } else
       fieldSize = ast.entity.size;
 
@@ -605,7 +623,8 @@ public final class Encoder implements Visitor {
     if (ast.entity == null) {
       fieldSize = ((Integer) ast.T.visit(this, null)).intValue();
       ast.entity = new Field (fieldSize, offset);
-      writeTableDetails(ast);
+      //writeTableDetails(ast);
+      tableVisitor.visitSingleFieldTypeDenoter(ast, o);
     } else
       fieldSize = ast.entity.size;
 
@@ -762,7 +781,8 @@ public final class Encoder implements Visitor {
       ConstDeclaration decl = (ConstDeclaration) constDeclaration;
       int typeSize = ((Integer) decl.E.type.visit(this, null)).intValue();
       decl.entity = new KnownValue(typeSize, value);
-      writeTableDetails(constDeclaration);
+      //writeTableDetails(constDeclaration);
+      
     }
   }
 
@@ -770,19 +790,19 @@ public final class Encoder implements Visitor {
   private final void elaborateStdPrimRoutine (Declaration routineDeclaration,
                                           int routineOffset) {
     routineDeclaration.entity = new PrimitiveRoutine (Machine.closureSize, routineOffset);
-    writeTableDetails(routineDeclaration);
+    //writeTableDetails(routineDeclaration);
   }
 
   private final void elaborateStdEqRoutine (Declaration routineDeclaration,
                                           int routineOffset) {
     routineDeclaration.entity = new EqualityRoutine (Machine.closureSize, routineOffset);
-    writeTableDetails(routineDeclaration);
+    //writeTableDetails(routineDeclaration);
   }
 
   private final void elaborateStdRoutine (Declaration routineDeclaration,
                                           int routineOffset) {
     routineDeclaration.entity = new KnownRoutine (Machine.closureSize, 0, routineOffset);
-    writeTableDetails(routineDeclaration);
+    //writeTableDetails(routineDeclaration);
   }
 
   private final void elaborateStdEnvironment() {
@@ -841,6 +861,16 @@ public final class Encoder implements Visitor {
 
   boolean tableDetailsReqd;
 
+  
+  /*
+ · Name: Nombre del identificador, por lo general se usa la propiedad spelling.
+· Type: Tipo del identificador.
+· Size: tamaño que ocupa en memoria el identificador
+· Level: nivel en el cual el identificador se encuentra
+· Displacement: desplazamiento/offset del identificador en memoria.
+· Value: valor por default (para constantes), si no existe se pone -1. 
+  */
+  
   public static void writeTableDetails(AST ast) {
       
   }
@@ -1127,7 +1157,8 @@ public final class Encoder implements Visitor {
         if(ast.lAST != null){
             ast.lAST.visit(this, o);
         }
-        writeTableDetails(ast);
+        //writeTableDetails(ast);
+        tableVisitor.visitForCommand(ast, o);
         return null;
     }
 
@@ -1142,6 +1173,8 @@ public final class Encoder implements Visitor {
         emit(Machine.STOREop, valSize, displayRegister(frame.level,
 	    address.level), address.displacement);
 
+        
+        tableVisitor.visitForCommandDef(ast, o);
         return valSize;
     }
 
@@ -1179,7 +1212,7 @@ public final class Encoder implements Visitor {
                 }
                 identifiers.remove(ast.fAST.I.spelling);
             }
-            writeTableDetails(ast.fAST);
+            
             if (frame.level == Machine.maxRoutineLevel)
               reporter.reportRestriction("can't nest routines more than 7 deep");
             else {
@@ -1210,7 +1243,7 @@ public final class Encoder implements Visitor {
                 }
                 identifiers.remove(ast.pAST.I.spelling);
             }
-            writeTableDetails(ast);
+            
             if (frame.level == Machine.maxRoutineLevel)
               reporter.reportRestriction("can't nest routines so deeply");
             else {
@@ -1247,7 +1280,11 @@ public final class Encoder implements Visitor {
         ObjectAddress address = ((KnownAddress) ast.entity).address;
         emit(Machine.STOREop, valSize, displayRegister(frame.level,
 	    address.level), address.displacement);
-        writeTableDetails(ast);
+        
+        //mandamos a la tabla de detalles
+        tableVisitor.visitInitializedVarDeclaration(ast, o);
+        //writeTableDetails(ast); //value
+        
         return valSize;
     }
 }

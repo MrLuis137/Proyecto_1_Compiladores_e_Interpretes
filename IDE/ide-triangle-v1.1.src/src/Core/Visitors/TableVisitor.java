@@ -677,17 +677,23 @@ public Object visitForCommand(ForCommand ast, Object o) {
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
+        if (ast.pfAST != null) ast.pfAST.visit(this, o);
+        if (ast.pfcsAST != null) ast.pfcsAST.visit(this, o);
         return null; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public Object visitProcFunc(ProcFunc ast, Object o) {
+        if (ast.fAST != null) ast.fAST.visit(this, o);
+        if (ast.pAST != null) ast.pAST.visit(this, o);
         return null; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public Object visitPrivateDeclaration(PrivateDeclaration ast, Object o) {
-        return null; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (ast.dAST != null) ast.dAST.visit(this, o);
+        if (ast.dAST2 != null) ast.dAST2.visit(this, o);
+        return null;
     }
 
     @Override

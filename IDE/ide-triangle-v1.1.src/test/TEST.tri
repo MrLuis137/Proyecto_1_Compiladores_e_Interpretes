@@ -1,21 +1,8 @@
-! Funciones mutuamente recursivas, anterior ve a posterior
-
-
 let
-
-  recursive
-
-    func f (a : Integer): Integer ~ 1 + g(a - 1)
-
-    and
-
-    func g (b : Integer): Integer ~ 1
-
-  end
-
+	var n := 6
 in
-
-  putint(f(10))
-
+for i from 1 .. n
+do
+putint(i)
 end
- 
+end
