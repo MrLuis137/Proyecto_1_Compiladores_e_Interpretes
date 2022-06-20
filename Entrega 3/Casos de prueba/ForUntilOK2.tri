@@ -4,7 +4,7 @@ let
 
 in
 
-  for i from 1 .. k until i > 3 do ! determinar que k se evalúa una sola vez
+  for i from 1 .. k until i > 2 do ! determinar que k se evalï¿½a una sola vez
 
     k := k + 1 ; 
 

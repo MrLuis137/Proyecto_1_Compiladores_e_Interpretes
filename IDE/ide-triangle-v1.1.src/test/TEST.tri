@@ -1,30 +1,15 @@
 let
-   var input : Integer;
-   var text := ['I', 'n', 'g', 'r', 'e', 's', 'e', ' ', 'e', 'l', ' ', 'n', 'u', 'm', 'e', 'r', 'o', ' ', 'd', 'e', ' ', 'f', 'i', 'b', 'o', 'n', 'a', 'c', 'h', 'i', ' ', 'p', 'o', 'r', ' ', 'c', 'a', 'l', 'c', 'u', 'l', 'a', 'r', ' ', '>'];
 
-    private
-        var f := 0
-    in
-        recursive
-            func fib(n : Integer): Integer ~ 
-                if n <= 1 then 
-                    if n = 1 then
-			1
-		    else
-			0
-                else 
-                    sum(fib(n-1), fib(n-2))
-                
-           
-        and
-            func sum(a:Integer ,b: Integer) : Integer ~ 
-                a+b 
-        end
-    end
+  var k := 10
+
 in
-    for i from 0 .. 42 do
-	put(text[i])
-    end;
-    getint(var input);
-    putint(fib(input))
+
+  for i from 1 .. k until i > 2 do ! determinar que k se eval?a una sola vez
+
+    k := k + 1 ; 
+
+    putint (1) ! debe imprimir 2 unos
+
+  end
+
 end

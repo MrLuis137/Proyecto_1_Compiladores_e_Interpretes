@@ -1120,7 +1120,6 @@ public final class Encoder implements Visitor {
         Frame frame1 = new Frame(frame, valSize);
         //Valor temporal del limite mayor
         int topLimitSize = (Integer) ast.eAST.type.visit(this, o);
-        emit(Machine.PUSHop, 0, 0, topLimitSize);
         KnownAddress topLimitAddress = new KnownAddress(Machine.addressSize, frame1.level, frame1.size);
         ast.eAST.visit(this, o);
         emit(Machine.STOREop, valSize, displayRegister(frame1.level,
