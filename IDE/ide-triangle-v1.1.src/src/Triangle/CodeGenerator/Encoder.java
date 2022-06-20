@@ -1114,27 +1114,37 @@ public final class Encoder implements Visitor {
     public Object visitForCommand(ForCommand ast, Object o) {
         Frame frame = (Frame) o;
         int jumpAddr, loopAddr, exitAddr;
+        //inicializa la variable de control
         int valSize = (Integer)ast.fdAST.visit(this, o);
-        Identifier variableControl = ast.fdAST.iAST;
-        loopAddr = nextInstrAddr;
-        
+        //crea un nuevo frame
+        Frame frame1 = new Frame(frame, valSize);
+        //Valor temporal del limite mayor
+        int topLimitSize = (Integer) ast.eAST.type.visit(this, o);
+        emit(Machine.PUSHop, 0, 0, topLimitSize);
+        KnownAddress topLimitAddress = new KnownAddress(Machine.addressSize, frame1.level, frame1.size);
+        ast.eAST.visit(this, o);
+        emit(Machine.STOREop, valSize, displayRegister(frame1.level,
+	    topLimitAddress.address.level), topLimitAddress.address.displacement);
+        //Dirección de la variable de control.
         ObjectAddress address = ((KnownAddress) ast.fdAST.entity).address;
-        boolean condition = ast.ceAST != null;
+        
         jumpAddr = nextInstrAddr;
         emit(Machine.JUMPop, 0, Machine.CBr, 0);
             loopAddr = nextInstrAddr;
         ast.cAST.visit(this, o);
         //Carga el controlador
-        emit(Machine.LOADop, valSize, displayRegister(frame.level,
+        emit(Machine.LOADop, valSize, displayRegister(frame1.level,
 	     address.level), address.displacement);
         //Cargar la constante 1
         emit(Machine.LOADLop, 0, 0, 1);
         emit(Machine.CALLop, Machine.SBr, Machine.PBr, 8);
-        emit(Machine.STOREop, valSize, displayRegister(frame.level,
+        emit(Machine.STOREop, valSize, displayRegister(frame1.level,
 	    address.level), address.displacement);
         //Condiciones
         patch(jumpAddr, nextInstrAddr);
         exitAddr = nextInstrAddr;
+        //Condición until o while del for
+        boolean condition = ast.ceAST != null;
         if(condition){
             
             ast.ceAST.visit(this, o);
@@ -1148,7 +1158,8 @@ public final class Encoder implements Visitor {
         emit(Machine.LOADop, valSize, displayRegister(frame.level,
 	     address.level), address.displacement);
         //conseguir y agregar en algún lado el segundo expression
-        ast.eAST.visit(this, o);
+        emit(Machine.LOADop, valSize, displayRegister(frame1.level,
+	     topLimitAddress.address.level), topLimitAddress.address.displacement);
         //llama a la comparación
         emit(Machine.CALLop, Machine.SBr, Machine.PBr, 14);
         emit(Machine.JUMPIFop, Machine.trueRep, Machine.CBr, loopAddr);
@@ -1157,7 +1168,6 @@ public final class Encoder implements Visitor {
         if(ast.lAST != null){
             ast.lAST.visit(this, o);
         }
-        //writeTableDetails(ast);
         tableVisitor.visitForCommand(ast, o);
         return null;
     }
@@ -1185,14 +1195,11 @@ public final class Encoder implements Visitor {
 
     @Override
     public Object visitRecursiveDeclaration(RecursiveDeclaration ast, Object o) {
-        HashMap identificadores = new HashMap<String, int[]>();
         RecursiveDeclaration temp = ast; 
         while(temp != null){
              temp.pfAST.visit(this, o);
              temp = temp.pfcsAST;
          }
-         temp = ast;
-
         return 0;
     }
 
